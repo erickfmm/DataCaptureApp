@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="luynk.appbeta.SeleccionaFigura">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scroll"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:ignore="UselessParent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rLayoutMain">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:id="@+id/lyTexto">
+
+                <TextView
+                    android:text="@string/selecciona_un_objeto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lyCuadrados"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ibCuadrado"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/cuadrado_peque"
+                    android:contentDescription="@string/cuadrado"
+                    android:layout_marginEnd="10dp" />
+
+                <ImageButton
+                    android:id="@+id/ibCirculo"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/circulo_azul"
+                    android:contentDescription="@string/circulo"
+                    android:layout_marginStart="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lyTriangulos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="179dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ibTriangulo"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/triangulo_rosa"
+                    android:contentDescription="@string/triangulo"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <ImageButton
+                    android:id="@+id/ibRombo"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rombo"
+                    android:contentDescription="@string/rombo"
+                    android:layout_marginStart="10dp"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

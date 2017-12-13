@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+    <EditText
+        android:id="@+id/editText"
+        style="@android:style/Widget.AutoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:editable="false"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="none"
+        android:text="Selecciona donde desaparecera el objeto" />
+
+    <Button
+        android:id="@+id/b2550"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="25% - 40%" />
+
+    <Button
+        android:id="@+id/b5075"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="50% - 65%" />
+
+    <Button
+        android:id="@+id/b75100"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="75% - 90%" />
+
+</LinearLayout>

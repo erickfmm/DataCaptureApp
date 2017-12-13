@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">AppBeta</string>
+    <string name="selecciona_un_objeto">Seleccione un objeto</string>
+    <string name="cuadrado">Cuadrado</string>
+    <string name="triangulo">Triangulo</string>
+    <string name="circulo">circulo</string>
+    <string name="rombo">rombo</string>
+    <string name="ingrese_el_id_del_usuario">Ingrese el Id del usuario</string>
+    <string name="continuar">Continuar</string>
+    <string name="nombre_config">Nombre</string>
+    <string name="figura_config">figura</string>
+    <string name="ruta_config">ruta</string>
+    <string name="desaparece_config">desaparece</string>
+    <string name="nueva_configuracion">Nueva Configuracion</string>
+    <string name="configuraciones_guardadas">Configuraciones Guardadas</string>
+    <string name="eliminar_todo">Eliminar Todo</string>
+    <string name="ingrese_el_nombre_de_la_config">Ingrese el nombre de la configuración</string>
+</resources>
