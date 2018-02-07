@@ -13,6 +13,7 @@ import java.util.List;
 
 import luynk.appbeta.InsertarIdUsuario;
 import luynk.appbeta.R;
+import luynk.appbeta.SeleccionaEntrenamientoVelocidad;
 import model.Configuracion;
 
 public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfiguracionAdapter.CartaViewHolder>{
@@ -52,7 +53,7 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
                             ruta.getText().toString(),
                             desaparece.getText().toString());
 
-                    Intent intent = new Intent(context, InsertarIdUsuario.class);
+                    Intent intent = new Intent(context, SeleccionaEntrenamientoVelocidad.class);
                     intent.putExtra("config",config);
                     context.startActivity(intent);
                 }
@@ -77,9 +78,9 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
         holder.itemView.setTag(item);
 
         holder.nombre.setText(item.getNombre());
-        holder.figura.setText("Figura: "+item.getFigura());
-        holder.ruta.setText("Ruta: "+item.getRuta());
-        holder.desaparece.setText("Desaparece: "+item.getDesaparece());
+        holder.figura.setText("Figure: "+item.getFigura());
+        holder.ruta.setText("Route: "+item.getRuta());
+        holder.desaparece.setText("Disappears: "+item.getDesaparece());
     }
 
     @Override

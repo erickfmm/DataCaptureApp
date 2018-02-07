@@ -10,39 +10,44 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Environment;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import model.Configuracion;
 
 
-public class Activity_RutaUno_Layout extends View {
+public class Activity_RutaPrincipal_Layout extends View {
 
     //Arrays para guardar las rutas del usuario y del objeto
     private ArrayList<Posicion> ruta = new ArrayList<>();
     private ArrayList<Posicion> rutaObjeto = new ArrayList<>();
+    private ArrayList<Puntos> points = new ArrayList<>();
 
     Bitmap elemento;
-    int elemento_x=0, elemento_y=0, x_dir, y_dir, contador;
+    float elemento_x=0, elemento_y=0;
     int elementoHeight, elementoWidth;
     String corX="NaN", corY="NaN";
     boolean flag;
+    double speed, percent, seconds, t_aux;
 
     private Paint mPaint;
     private Path mPath;
 
+    int pointPos = 0;
+
     Configuracion config;
-    String idUsuario;
+    String idUsuario, todayString, rootPathUser;
 
     FileOutputStream fos;
     FileOutputStream fosObj;
@@ -75,14 +80,11 @@ public class Activity_RutaUno_Layout extends View {
 
 
 
-    public Activity_RutaUno_Layout(Context context) throws FileNotFoundException {
+    public Activity_RutaPrincipal_Layout(Context context) throws FileNotFoundException {
         super(context);
 
         elemento_x = 0;
         elemento_y = getScreenHeight()/2;
-        x_dir = 2;
-        y_dir = -2;
-        contador = 0;
         flag = true;
         mPaint = new Paint();
         mPaint.setColor(Color.RED);
@@ -91,21 +93,22 @@ public class Activity_RutaUno_Layout extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(10);
         mPath = new Path();
+        seconds = 5;
+        percent = 100/seconds; //Percent of screen in 1 second
+        speed = percent/6000;
+        t_aux = 1 / (seconds*60);
 
-        config = ((RutaUno)getContext()).getConfig();
-        idUsuario = ((RutaUno)getContext()).getIdUsuario();
+        config = ((RutaPrincipal)getContext()).getConfig();
+        idUsuario = ((RutaPrincipal)getContext()).getIdUsuario();
+        points = ((RutaPrincipal)getContext()).getPoints();
+        rootPathUser = ((RutaPrincipal)getContext()).getRootPathUser();
 
-
-        //Crear carpeta para archivos la primera ves en el celular
-        String rootPath = Environment.getExternalStorageDirectory()
-                .getAbsolutePath() + "/PruebaApp/";
-        File root = new File(rootPath);
-        if (!root.exists()) {
-            root.mkdirs();
-        }
+        Date todayDate = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+        todayString = formatter.format(todayDate);
 
         //Crear archivo para ruta de usuario
-        File f = new File(rootPath + "coordenadas.txt");
+        File f = new File(rootPathUser + idUsuario + "_coordUser_"+todayString+".txt");
         if (f.exists()) {
             f.delete();
         }
@@ -118,7 +121,7 @@ public class Activity_RutaUno_Layout extends View {
         fos = new FileOutputStream(f);
 
         //Crear archivo para ruta de objeto
-        File f2 = new File(rootPath + "coordenadasObjeto.txt");
+        File f2 = new File(rootPathUser + idUsuario + "_coordFigure_"+todayString+".txt");
         if (f2.exists()) {
             f2.delete();
         }
@@ -151,9 +154,7 @@ public class Activity_RutaUno_Layout extends View {
             elementoWidth = options.outWidth;
 
             //finalizar metodo si se llega al final de la pantalla
-            if (elemento_x >= canvas.getWidth() - elementoWidth * 2) {
-                x_dir = 0;
-                y_dir = 0;
+            if (elemento_x >= canvas.getWidth() - elementoWidth) {
                 flag = false;
 
                 stopRepeatingTask();
@@ -180,8 +181,7 @@ public class Activity_RutaUno_Layout extends View {
                 this.setDrawingCacheEnabled(true);
                 this.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 Bitmap bitmap = this.getDrawingCache();
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/PruebaApp/";
-                File file = new File(path+"/image.png");
+                File file = new File(rootPathUser+idUsuario+"_image_"+todayString+".png");
                 FileOutputStream ostream;
 
                 try {
@@ -190,47 +190,41 @@ public class Activity_RutaUno_Layout extends View {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
                     ostream.flush();
                     ostream.close();
-                    Toast.makeText(this.getContext(), "Imagen Guardada", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(this.getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getContext(), "Error when saving the image", Toast.LENGTH_SHORT).show();
                 }
 
                 // nueva activity
-                Intent newIntent = new Intent(this.getContext(), RutaUnoDesaparece.class);
+                Intent newIntent = new Intent(this.getContext(), RutaPrincipalDesaparece.class);
                 newIntent.putExtra("config",config);
                 newIntent.putExtra("idUsuario", idUsuario);
+                newIntent.putExtra("rootPathUser", rootPathUser);
+                newIntent.putExtra("points", points);
                 newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.getContext().startActivity(newIntent);
 
             } else {
-                //Elegir ruta
-                if (contador == 200) {
-                    y_dir = 2;
-                } else if (contador == 400) {
-                    y_dir = -2;
-                    contador = 0;
-                }
+
+                elemento_x = points.get(pointPos).getX();
+                elemento_y = points.get(pointPos).getY();
+
+                pointPos++;
+
+                //Dibujar el objeto
+                if (config.getFigura().contains("square"))
+                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
+                else if (config.getFigura().contains("circle"))
+                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
+                else if (config.getFigura().contains("triangle"))
+                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
+                else
+                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);
+
+                canvas.drawBitmap(elemento, elemento_x, elemento_y, null);
+
+                invalidate();
             }
-
-            //Calcular movimiento del objeto en base a x_dir e y_dir
-            elemento_x = elemento_x + x_dir;
-            elemento_y = elemento_y + y_dir;
-
-            //Dibujar el objeto
-            if (config.getFigura().contains("cuadrado"))
-                elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
-            else if (config.getFigura().contains("circulo"))
-                elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
-            else if (config.getFigura().contains("triangulo"))
-                elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
-            else
-                elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);
-
-            canvas.drawBitmap(elemento, elemento_x, elemento_y, null);
-
-            contador++;
-            invalidate();
         }
     }
 

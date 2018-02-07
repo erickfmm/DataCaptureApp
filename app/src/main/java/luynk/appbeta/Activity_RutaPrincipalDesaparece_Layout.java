@@ -10,26 +10,29 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Environment;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import model.Configuracion;
 
 
-public class Activity_RutaUnoDesaparece_Layout extends View {
+public class Activity_RutaPrincipalDesaparece_Layout extends View {
     private ArrayList<Posicion> ruta = new ArrayList<>();
+    private ArrayList<Puntos> points = new ArrayList<>();
+
     Bitmap elemento;
-    int elemento_x, elemento_y, x_dir, y_dir, contador;
+    float elemento_x, elemento_y;
     int elementoHeight, elementoWidth;
     boolean flag;
     String corX="NaN", corY="NaN";
@@ -37,8 +40,10 @@ public class Activity_RutaUnoDesaparece_Layout extends View {
     private Paint mPaint;
     private Path mPath;
 
+    int pointPos = 0;
+
     Configuracion config;
-    String idUsuario;
+    String idUsuario, todayString, rootPathUser;
 
     FileOutputStream fos;
 
@@ -69,14 +74,11 @@ public class Activity_RutaUnoDesaparece_Layout extends View {
 
 
 
-    public Activity_RutaUnoDesaparece_Layout(Context context) throws FileNotFoundException {
+    public Activity_RutaPrincipalDesaparece_Layout(Context context) throws FileNotFoundException {
         super(context);
 
         elemento_x = 0;
         elemento_y = getScreenHeight()/2;
-        x_dir = 2;
-        y_dir = -2;
-        contador = 0;
         flag = true;
         mPaint = new Paint();
         mPaint.setColor(Color.RED);
@@ -86,17 +88,16 @@ public class Activity_RutaUnoDesaparece_Layout extends View {
         mPaint.setStrokeWidth(10);
         mPath = new Path();
 
-        config = ((RutaUnoDesaparece)getContext()).getConfig();
-        idUsuario = ((RutaUnoDesaparece)getContext()).getIdUsuario();
+        config = ((RutaPrincipalDesaparece)getContext()).getConfig();
+        idUsuario = ((RutaPrincipalDesaparece)getContext()).getIdUsuario();
+        points = ((RutaPrincipalDesaparece)getContext()).getPoints();
+        rootPathUser = ((RutaPrincipalDesaparece)getContext()).getRootPathUser();
 
-        String rootPath = Environment.getExternalStorageDirectory()
-                .getAbsolutePath() + "/PruebaApp/";
-        File root = new File(rootPath);
-        if (!root.exists()) {
-            root.mkdirs();
-        }
+        Date todayDate = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+        todayString = formatter.format(todayDate);
 
-        File f = new File(rootPath + "coorDesaparece.txt");
+        File f = new File(rootPathUser + idUsuario + "_coordDisappear_"+todayString+".txt");
         if (f.exists()) {
             f.delete();
         }
@@ -119,6 +120,7 @@ public class Activity_RutaUnoDesaparece_Layout extends View {
 
         //flag para controlar ejecucion de metodo onDraw
         if(flag) {
+
             //Crear objeto para obtener ancho y largo
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
@@ -127,9 +129,7 @@ public class Activity_RutaUnoDesaparece_Layout extends View {
             elementoWidth = options.outWidth;
 
             //finalizar metodo si se llega al final de la pantalla
-            if (elemento_x >= canvas.getWidth() - elementoWidth * 2) {
-                x_dir = 0;
-                y_dir = 0;
+            if (elemento_x >= canvas.getWidth() - elementoWidth) {
                 flag = false;
 
                 stopRepeatingTask();
@@ -143,13 +143,11 @@ public class Activity_RutaUnoDesaparece_Layout extends View {
                     e.printStackTrace();
                 }
 
-
                 //guardar imagen
                 this.setDrawingCacheEnabled(true);
                 this.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 Bitmap bitmap = this.getDrawingCache();
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/PruebaApp/";
-                File file = new File(path+"/imagenDesaparece.png");
+                File file = new File(rootPathUser+ idUsuario +"_imageDisappear_"+todayString+".png");
                 FileOutputStream ostream;
                 try {
                     file.createNewFile();
@@ -157,10 +155,10 @@ public class Activity_RutaUnoDesaparece_Layout extends View {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
                     ostream.flush();
                     ostream.close();
-                    Toast.makeText(this.getContext(), "Imagen Guardada", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this.getContext(), "Imagen Guardada", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(this.getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getContext(), "Error when saving the image", Toast.LENGTH_SHORT).show();
                 }
 
                 // nueva activity
@@ -169,56 +167,52 @@ public class Activity_RutaUnoDesaparece_Layout extends View {
                 this.getContext().startActivity(newIntent);
 
             } else {
-                //Elegir ruta
-                if (contador == 200) {
-                    y_dir = 2;
-                } else if (contador == 400) {
-                    y_dir = -2;
-                    contador = 0;
+
+                // movimiento del objeto
+                elemento_x = points.get(pointPos).getX();
+                elemento_y = points.get(pointPos).getY();
+
+                pointPos++;
+
+                //Para clase desaparece
+                String porcentaje = config.getDesaparece();
+
+                int inferior;
+                double superior;
+                if(porcentaje.contains("2550")){
+                    inferior=1;
+                    superior = 1.5;
+                }else if (porcentaje.contains("5075")){
+                    inferior=2;
+                    superior=2.5;
+                }else{
+                    inferior=3;
+                    superior = 3.5;
                 }
+
+                int aux = canvas.getWidth()/4;
+                if (elemento_x>=aux*inferior && elemento_x<aux*superior)
+                {
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(
+                            elemento, 1, 1, false);
+                    canvas.drawBitmap(resizedBitmap, elemento_x, elemento_y, null);
+                }else{
+                    //Dibujar el objeto
+                    if (config.getFigura().contains("square"))
+                        elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
+                    else if (config.getFigura().contains("circle"))
+                        elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
+                    else if (config.getFigura().contains("triangle"))
+                        elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
+                    else
+                        elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);
+                    canvas.drawBitmap(elemento, elemento_x, elemento_y, null);
+                }
+
+
+                invalidate();
+
             }
-
-            //Calcular movimiento del objeto en base a x_dir e y_dir
-            elemento_x = elemento_x + x_dir;
-            elemento_y = elemento_y + y_dir;
-
-            //Para clase desaparece
-            String porcentaje = config.getDesaparece();
-
-            int inferior;
-            double superior;
-            if(porcentaje.contains("2550")){
-                inferior=1;
-                superior = 1.5;
-            }else if (porcentaje.contains("5075")){
-                inferior=2;
-                superior=2.5;
-            }else{
-                inferior=3;
-                superior = 3.5;
-            }
-
-            int aux = canvas.getWidth()/4;
-            if (elemento_x>=aux*inferior && elemento_x<aux*superior)
-            {
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(
-                        elemento, 1, 1, false);
-                canvas.drawBitmap(resizedBitmap, elemento_x, elemento_y, null);
-            }else{
-                //Dibujar el objeto
-                if (config.getFigura().contains("cuadrado"))
-                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
-                else if (config.getFigura().contains("circulo"))
-                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
-                else if (config.getFigura().contains("triangulo"))
-                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
-                else
-                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);
-                canvas.drawBitmap(elemento, elemento_x, elemento_y, null);
-            }
-
-            contador++;
-            invalidate();
         }
     }
 

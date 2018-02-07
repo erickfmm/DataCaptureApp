@@ -32,7 +32,7 @@ public class InsertarNombreConfig extends Activity{
             @Override
             public void onClick(View view) {
                 if(nombreConfig.getText() == null || nombreConfig.getText().toString().equals("")) {
-                    Toast.makeText(view.getContext(), "Debe ingresar un nombre", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "You must enter a name", Toast.LENGTH_SHORT).show();
                 }else {
                     String nombre = nombreConfig.getText().toString();
 

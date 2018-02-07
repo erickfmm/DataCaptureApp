@@ -4,30 +4,35 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import model.Configuracion;
 
 
-public class RutaUnoDesaparece extends Activity {
-    Activity_RutaUnoDesaparece_Layout rutaUnoDesaparece_layoutView;
+public class RutaPrincipal extends Activity {
 
+    Activity_RutaPrincipal_Layout rutaUno_layoutView;
     Configuracion config;
-    String porcentaje, idUsuario;
+    String idUsuario, rootPathUser;
+    private ArrayList<Puntos> points = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         config = getIntent().getParcelableExtra("config");
-        porcentaje = config.getDesaparece();
         idUsuario = getIntent().getStringExtra("idUsuario");
+        points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
+        rootPathUser = getIntent().getStringExtra("rootPathUser");
 
         try {
-            rutaUnoDesaparece_layoutView = new Activity_RutaUnoDesaparece_Layout(this);
+            rutaUno_layoutView = new Activity_RutaPrincipal_Layout(this);
+            setContentView(rutaUno_layoutView);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        setContentView(rutaUnoDesaparece_layoutView);
+
+        //Fin Oncreate
     }
 
     public String getIdUsuario()
@@ -35,10 +40,14 @@ public class RutaUnoDesaparece extends Activity {
         return this.idUsuario;
     }
 
+    public String getRootPathUser() { return this.rootPathUser; }
+
     public Configuracion getConfig()
     {
         return this.config;
     }
+
+    public ArrayList<Puntos> getPoints() { return this.points; }
 
     @Override
     public void onBackPressed() {

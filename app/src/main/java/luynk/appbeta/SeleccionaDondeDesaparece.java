@@ -31,7 +31,7 @@ public class SeleccionaDondeDesaparece extends Activity{
             public void onClick(View view) {
                 config.setDesaparece("2550");
                 managerConfig.insertar(null, config.getNombre(), config.getFigura(), config.getRuta(), config.getDesaparece());
-                Intent intent = new Intent(view.getContext(), InsertarIdUsuario.class);
+                Intent intent = new Intent(view.getContext(), SeleccionaEntrenamientoVelocidad.class);
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }
@@ -43,7 +43,7 @@ public class SeleccionaDondeDesaparece extends Activity{
             public void onClick(View view) {
                 config.setDesaparece("5075");
                 managerConfig.insertar(null, config.getNombre(), config.getFigura(), config.getRuta(), config.getDesaparece());
-                Intent intent = new Intent(view.getContext(), InsertarIdUsuario.class);
+                Intent intent = new Intent(view.getContext(), SeleccionaEntrenamientoVelocidad.class);
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }
@@ -55,7 +55,7 @@ public class SeleccionaDondeDesaparece extends Activity{
             public void onClick(View view) {
                 config.setDesaparece("75100");
                 managerConfig.insertar(null, config.getNombre(), config.getFigura(), config.getRuta(), config.getDesaparece());
-                Intent intent = new Intent(view.getContext(), InsertarIdUsuario.class);
+                Intent intent = new Intent(view.getContext(), SeleccionaEntrenamientoVelocidad.class);
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }

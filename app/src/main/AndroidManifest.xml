@@ -24,7 +24,7 @@
             android:screenOrientation="landscape">
         </activity>
 
-        <activity android:name=".SeleccionaRuta"
+        <activity android:name=".SeleccionaEntrenamientoVelocidad"
             android:screenOrientation="landscape">
         </activity>
 
@@ -32,11 +32,11 @@
             android:screenOrientation="landscape">
         </activity>
 
-        <activity android:name=".RutaUno"
+        <activity android:name=".RutaPrincipal"
             android:screenOrientation="landscape">
         </activity>
 
-        <activity android:name=".RutaUnoDesaparece"
+        <activity android:name=".RutaPrincipalDesaparece"
             android:screenOrientation="landscape">
         </activity>
 
@@ -45,6 +45,18 @@
         </activity>
 
         <activity android:name=".InsertarNombreConfig"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".Entrenamiento"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".ExplicacionEntrenamiento"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".Contador"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".ExplicacionPrincipal"
             android:screenOrientation="landscape"/>
 
     </application>

@@ -1,18 +1,26 @@
 <resources>
-    <string name="app_name">AppBeta</string>
-    <string name="selecciona_un_objeto">Seleccione un objeto</string>
+    <string name="app_name">DataCaptureApp</string>
+    <string name="selecciona_un_objeto">Select a figure</string>
     <string name="cuadrado">Cuadrado</string>
     <string name="triangulo">Triangulo</string>
     <string name="circulo">circulo</string>
     <string name="rombo">rombo</string>
-    <string name="ingrese_el_id_del_usuario">Ingrese el Id del usuario</string>
-    <string name="continuar">Continuar</string>
+    <string name="ingrese_el_id_del_usuario">Enter the user id</string>
+    <string name="continuar">Continue</string>
     <string name="nombre_config">Nombre</string>
     <string name="figura_config">figura</string>
     <string name="ruta_config">ruta</string>
     <string name="desaparece_config">desaparece</string>
-    <string name="nueva_configuracion">Nueva Configuracion</string>
-    <string name="configuraciones_guardadas">Configuraciones Guardadas</string>
-    <string name="eliminar_todo">Eliminar Todo</string>
-    <string name="ingrese_el_nombre_de_la_config">Ingrese el nombre de la configuración</string>
+    <string name="nueva_configuracion">New configuration</string>
+    <string name="configuraciones_guardadas">Saved configurations</string>
+    <string name="eliminar_todo">Delete all</string>
+    <string name="ingrese_el_nombre_de_la_config">Enter the name of the configuration</string>
+    <string name="selecciona_donde_desaparecera_el_objeto">Select the percentage of the screen on which the figure will disappear</string>
+    <string name="enter_the_number_of_trainings">Enter the number of trainings</string>
+    <string name="enter_the_speed">Enter the speed (seconds that the object takes to travel through the screen)</string>
+    <string name="bienvenido_al_entrenamiento">Bienvenido al Entrenamiento</string>
+    <string name="explicacion">En la siguiente pantalla sigue a la figura geometrica con tu dedo</string>
+    <string name="countdown">CountDown</string>
+    <string name="buen_trabajo">¡Buen trabajo durante el entrenamiento!</string>
+    <string name="exp_principal">En la siguiente pantalla debes hacer lo mismo que durante el entrenamiento, pero el objeto puede desaparecer durante cierto tiempo, así que debes estar atento!</string>
 </resources>

@@ -11,4 +11,8 @@ public class Posicion implements Serializable{
             this.x = "x:" + x;
             this.y = "y:" + y;
         }
+
+    public String getY() {
+        return y;
+    }
 }

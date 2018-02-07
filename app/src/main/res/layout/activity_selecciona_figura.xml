@@ -17,22 +17,23 @@
 
 
         <RelativeLayout
+            android:id="@+id/rLayoutMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rLayoutMain">
+            android:gravity="center">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:id="@+id/lyTexto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:id="@+id/lyTexto">
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="@string/selecciona_un_objeto"
+                    android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView3" />
+                    android:text="@string/selecciona_un_objeto" />
 
             </LinearLayout>
 
@@ -50,19 +51,19 @@
                     android:id="@+id/ibCuadrado"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/cuadrado_peque"
-                    android:contentDescription="@string/cuadrado"
-                    android:layout_marginEnd="10dp" />
+                    android:contentDescription="@string/cuadrado" />
 
                 <ImageButton
                     android:id="@+id/ibCirculo"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:background="@drawable/circulo_azul"
-                    android:contentDescription="@string/circulo"
-                    android:layout_marginStart="10dp" />
+                    android:contentDescription="@string/circulo" />
 
             </LinearLayout>
 
@@ -78,19 +79,19 @@
                     android:id="@+id/ibTriangulo"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:background="@drawable/triangulo_rosa"
-                    android:contentDescription="@string/triangulo"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/triangulo_rosa"
+                    android:contentDescription="@string/triangulo" />
 
                 <ImageButton
                     android:id="@+id/ibRombo"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:background="@drawable/rombo"
-                    android:contentDescription="@string/rombo"
-                    android:layout_marginStart="10dp"/>
+                    android:contentDescription="@string/rombo" />
             </LinearLayout>
 
 

@@ -39,9 +39,9 @@ public class SeleccionaConfiguracion extends Activity{
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        builder.setTitle("Confirmar Eliminación");
-        builder.setMessage("Seguro que desea eliminar todas las configuraciones guardadas");
-        builder.setPositiveButton("Confirmar",
+        builder.setTitle("Confirm DELETE");
+        builder.setMessage("Are you sure you want to DELETE ALL saved configurations?");
+        builder.setPositiveButton("Confirm",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -49,7 +49,7 @@ public class SeleccionaConfiguracion extends Activity{
                         recargarRecycler();
                     }
                 });
-        builder.setNegativeButton("Cancelar",
+        builder.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -25,9 +25,9 @@ public class SeleccionaFigura extends Activity {
         cuadrado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                config.setFigura("cuadrado");
-
-                Intent intent = new Intent(view.getContext(), SeleccionaRuta.class);
+                config.setFigura("square");
+                config.setRuta("route1");
+                Intent intent = new Intent(view.getContext(), SeleccionaDondeDesaparece.class);
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }
@@ -38,9 +38,9 @@ public class SeleccionaFigura extends Activity {
         circulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                config.setFigura("circulo");
-
-                Intent intent = new Intent(view.getContext(), SeleccionaRuta.class);
+                config.setFigura("circle");
+                config.setRuta("route2");
+                Intent intent = new Intent(view.getContext(), SeleccionaDondeDesaparece.class);
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }
@@ -51,9 +51,9 @@ public class SeleccionaFigura extends Activity {
         triangulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                config.setFigura("triangulo");
-
-                Intent intent = new Intent(view.getContext(), SeleccionaRuta.class);
+                config.setFigura("triangle");
+                config.setRuta("route3");
+                Intent intent = new Intent(view.getContext(), SeleccionaDondeDesaparece.class);
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }
@@ -63,9 +63,9 @@ public class SeleccionaFigura extends Activity {
         rombo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                config.setFigura("rombo");
-
-                Intent intent = new Intent(view.getContext(), SeleccionaRuta.class);
+                config.setFigura("rhombus");
+                config.setRuta("route4");
+                Intent intent = new Intent(view.getContext(), SeleccionaDondeDesaparece.class);
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }
