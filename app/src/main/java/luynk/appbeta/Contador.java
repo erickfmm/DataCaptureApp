@@ -4,17 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.ImageView;
-
 import java.util.ArrayList;
-
 import model.Configuracion;
 
 public class Contador extends Activity {
 
     String idUsuario, str_aux, rootPathUser;
     Configuracion config;
-    int entrenamientos, contador_entrenamientos, aux=0;
+    int entrenamientos, contador_entrenamientos;
     private ArrayList<Puntos> points = new ArrayList<>();
     ImageView contador;
 
@@ -38,13 +37,16 @@ public class Contador extends Activity {
         contador = (ImageView) findViewById(R.id.ivContador);
         contador.setBackgroundResource(R.drawable.tres);
 
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer(4000, 1000) {
             public void onTick(long millisUntilFinished) {
-                aux++;
-                if (aux==1){
+
+                Log.d("mili", String.valueOf(millisUntilFinished));
+                if (millisUntilFinished >= 3000){
                     contador.setBackgroundResource(R.drawable.tres);
-                }else if (aux==2){
+                }else if (millisUntilFinished >= 2000){
                     contador.setBackgroundResource(R.drawable.dos);
+                }else {
+                    contador.setBackgroundResource(R.drawable.uno);
                 }
             }
 

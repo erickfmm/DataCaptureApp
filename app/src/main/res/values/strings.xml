@@ -18,9 +18,9 @@
     <string name="selecciona_donde_desaparecera_el_objeto">Select the percentage of the screen on which the figure will disappear</string>
     <string name="enter_the_number_of_trainings">Enter the number of trainings</string>
     <string name="enter_the_speed">Enter the speed (seconds that the object takes to travel through the screen)</string>
-    <string name="bienvenido_al_entrenamiento">Bienvenido al Entrenamiento</string>
-    <string name="explicacion">En la siguiente pantalla sigue a la figura geometrica con tu dedo</string>
+    <string name="bienvenido_al_entrenamiento">Welcome to the Training phase</string>
+    <string name="explicacion">On the next screen follow the geometric figure with your finger.</string>
     <string name="countdown">CountDown</string>
-    <string name="buen_trabajo">¡Buen trabajo durante el entrenamiento!</string>
-    <string name="exp_principal">En la siguiente pantalla debes hacer lo mismo que durante el entrenamiento, pero el objeto puede desaparecer durante cierto tiempo, así que debes estar atento!</string>
+    <string name="buen_trabajo">Good job during the training phase!</string>
+    <string name="exp_principal">On the next screen you should do the same as during the training phase, but the geometric figure may disappear for a certain time, so you must pay attention!</string>
 </resources>
