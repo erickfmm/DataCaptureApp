@@ -15,6 +15,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -111,20 +113,18 @@ public class Activity_Entrenamiento_Layout extends View {
         todayString = formatter.format(todayDate);
 
         //Crear carpeta para archivos la primera ves en el dispositivo
-        String rootPath = Environment.getExternalStorageDirectory()
-                .getAbsolutePath() + "/DataCaptureApp/";
+        String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DataCaptureApp/";
+
         File root = new File(rootPath);
         if (!root.exists()) {
             root.mkdirs();
         }
 
-        if (contador_entrenamientos==1){
-            //crear carpeta de usuario
-            rootPathUser = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DataCaptureApp/"+idUsuario+"_"+todayString+"/";
-            File rootAux = new File(rootPathUser);
-            if (!rootAux.exists()) {
-                rootAux.mkdirs();
-            }
+        //crear carpeta de usuario
+        rootPathUser = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DataCaptureApp/"+idUsuario+"_"+todayString+"/";
+        File rootAux = new File(rootPathUser);
+        if (!rootAux.exists()) {
+            rootAux.mkdirs();
         }else {
             rootPathUser = ((Entrenamiento)getContext()).getRootPathUser();
         }
@@ -136,11 +136,10 @@ public class Activity_Entrenamiento_Layout extends View {
                 f.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
+                Toast.makeText(context, "We need Write External Storage permission. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
             }
         }
-
         fos = new FileOutputStream(f);
-
         //inicio handler
         startRepeatingTask();
     }
