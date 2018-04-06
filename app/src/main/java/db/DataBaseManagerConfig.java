@@ -16,16 +16,18 @@ public class DataBaseManagerConfig extends DataBaseManager{
 
     private static final String CN_ID = "_id";
     private static final String CN_NOMBRE = "nombre";
-    private static final String CN_FIGURA = "figura";
-    private static final String CN_RUTA = "ruta";
-    private static final String CN_DESAPARECE = "desaparece";
+    private static final String CN_INTENTOS = "intentos";
+    private static final String CN_SEGUNDOSVELOCIDAD = "velocidad";
+    private static final String CN_DESAPARECEINICIO = "desapareceinicio";
+    private static final String CN_DESAPARECEFINAL = "desaparecefinal";
 
     public static final String CREATE_TABLE = "create table " + NOMBRE_TABLA + " ("
             + CN_ID + " integer PRIMARY KEY AUTOINCREMENT, "
             + CN_NOMBRE + " text NOT NULL, "
-            + CN_FIGURA + " text NOT NULL, "
-            + CN_RUTA + " integer NOT NULL, "
-            + CN_DESAPARECE + " integer NOT NULL"
+            + CN_INTENTOS + " integer NOT NULL, "
+            + CN_SEGUNDOSVELOCIDAD + " integer NOT NULL, "
+            + CN_DESAPARECEINICIO + " integer NOT NULL,"
+            + CN_DESAPARECEFINAL + " integer NOT NULL"
             + ");";
 
     public DataBaseManagerConfig(Context context)
@@ -40,34 +42,39 @@ public class DataBaseManagerConfig extends DataBaseManager{
         super.getDb().close();
     }
 
-    private ContentValues generarContentValues(String id, String nombre, String figura, String ruta, String desaparece)
+    private ContentValues generarContentValues(String id, String nombre, String intentos, String segundosVelocidad,
+                                               String desapareceInicio, String desapareceFinal)
     {
         ContentValues valores = new ContentValues();
         valores.put(CN_ID, id);
         valores.put(CN_NOMBRE, nombre);
-        valores.put(CN_FIGURA, figura);
-        valores.put(CN_RUTA, ruta);
-        valores.put(CN_DESAPARECE, desaparece);
+        valores.put(CN_INTENTOS, intentos);
+        valores.put(CN_SEGUNDOSVELOCIDAD, segundosVelocidad);
+        valores.put(CN_DESAPARECEINICIO, desapareceInicio);
+        valores.put(CN_DESAPARECEFINAL, desapareceFinal);
 
         return valores;
     }
 
 
     @Override
-    public void insertar(String id, String nombre, String figura, String ruta, String desaparece)
+    public void insertar(String id, String nombre, String intentos, String segundosVelocidad,
+                         String desapareceInicio, String desapareceFinal)
     {
-        super.getDb().insert(NOMBRE_TABLA,null, generarContentValues(id,nombre,figura,ruta,desaparece));
+        super.getDb().insert(NOMBRE_TABLA,null, generarContentValues(id,nombre,intentos,segundosVelocidad,desapareceInicio,desapareceFinal));
     }
 
     @Override
-    public void actualizar(String id, String nombre, String figura, String ruta, String desaparece)
+    public void actualizar(String id, String nombre, String intentos, String segundosVelocidad,
+                           String desapareceInicio, String desapareceFinal)
     {
         ContentValues valores = new ContentValues();
         valores.put(CN_ID, id);
         valores.put(CN_NOMBRE, nombre);
-        valores.put(CN_FIGURA, figura);
-        valores.put(CN_RUTA, ruta);
-        valores.put(CN_DESAPARECE, desaparece);
+        valores.put(CN_INTENTOS, intentos);
+        valores.put(CN_SEGUNDOSVELOCIDAD, segundosVelocidad);
+        valores.put(CN_DESAPARECEINICIO, desapareceInicio);
+        valores.put(CN_DESAPARECEFINAL, desapareceFinal);
 
         String [] args = new String[]{id};
 
@@ -90,7 +97,7 @@ public class DataBaseManagerConfig extends DataBaseManager{
     @Override
     public Cursor cargarCursor()
     {
-        String [] columnas = new String[]{CN_ID, CN_NOMBRE, CN_FIGURA, CN_RUTA, CN_DESAPARECE};
+        String [] columnas = new String[]{CN_ID, CN_NOMBRE, CN_INTENTOS, CN_SEGUNDOSVELOCIDAD, CN_DESAPARECEINICIO, CN_DESAPARECEFINAL};
         return super.getDb().query(NOMBRE_TABLA, columnas, null, null, null, null, null);
     }
 
@@ -118,9 +125,10 @@ public class DataBaseManagerConfig extends DataBaseManager{
 
             configuracion.setId(cursor.getString(0));
             configuracion.setNombre(cursor.getString(1));
-            configuracion.setFigura(cursor.getString(2));
-            configuracion.setRuta(cursor.getString(3));
-            configuracion.setDesaparece(cursor.getString(4));
+            configuracion.setIntentos(Integer.parseInt(cursor.getString(2)));
+            configuracion.setSegundosVelocidad(Integer.parseInt(cursor.getString(3)));
+            configuracion.setDesapareceInicio(Integer.parseInt(cursor.getString(4)));
+            configuracion.setDesapareceFinal(Integer.parseInt(cursor.getString(5)));
 
             list.add(configuracion);
         }

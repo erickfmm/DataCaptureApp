@@ -12,7 +12,7 @@ public class ExplicacionEntrenamiento extends Activity {
 
     String idUsuario, aux;
     Configuracion config;
-    int entrenamientos, contador_entrenamientos;
+    int contador_entrenamientos;
     private ArrayList<Puntos> points = new ArrayList<>();
 
     @Override
@@ -24,7 +24,7 @@ public class ExplicacionEntrenamiento extends Activity {
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
         points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
-        entrenamientos = getIntent().getIntExtra("entrenamiento", 0);
+        //entrenamientos = Integer.parseInt(config.getIntentos());// getIntent().getIntExtra("entrenamiento", 0);
         contador_entrenamientos = getIntent().getIntExtra("contador_entrenamientos", 0);
 
         aux = "entrenamiento";
@@ -37,7 +37,7 @@ public class ExplicacionEntrenamiento extends Activity {
                         intent.putExtra("config",config);
                         intent.putExtra("idUsuario", idUsuario);
                         intent.putExtra("points", points);
-                        intent.putExtra("entrenamiento", entrenamientos);
+                        //intent.putExtra("entrenamiento", entrenamientos);
                         intent.putExtra("contador_entrenamientos", contador_entrenamientos);
                         intent.putExtra("aux", aux);
                         view.getContext().startActivity(intent);

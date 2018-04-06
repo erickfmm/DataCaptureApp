@@ -30,17 +30,19 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
     static class CartaViewHolder extends RecyclerView.ViewHolder{
         //Campos de cada item
         protected TextView nombre;
-        protected TextView figura;
-        protected TextView ruta;
-        protected TextView desaparece;
+        protected TextView intentos;
+        protected TextView segundosVelocidad;
+        protected TextView desapareceInicio;
+        protected TextView desapareceFinal;
 
         public CartaViewHolder(View view){
             super(view);
 
             this.nombre = (TextView) view.findViewById(R.id.nombre_config);
-            this.figura = (TextView) view.findViewById(R.id.figura_config);
-            this.ruta = (TextView) view.findViewById(R.id.ruta_config);
-            this.desaparece = (TextView) view.findViewById(R.id.desaparece_config);
+            this.intentos = (TextView) view.findViewById(R.id.intentos_config);
+            this.segundosVelocidad = (TextView) view.findViewById(R.id.segundosVelocidad_config);
+            this.desapareceInicio = (TextView) view.findViewById(R.id.desapareceInicio_config);
+            this.desapareceFinal = (TextView) view.findViewById(R.id.desapareceFinal);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -49,11 +51,13 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
 
                     Configuracion config = new Configuracion(null,
                             nombre.getText().toString(),
-                            figura.getText().toString(),
-                            ruta.getText().toString(),
-                            desaparece.getText().toString());
+                            intentos.getText().toString().replaceFirst("^(.)*: ", ""),
+                            segundosVelocidad.getText().toString().replaceFirst("^(.)*: ", ""),
+                            desapareceInicio.getText().toString().replaceFirst("^(.)*: ", ""),
+                            desapareceFinal.getText().toString().replaceFirst("^(.)*: ", ""));
 
-                    Intent intent = new Intent(context, SeleccionaEntrenamientoVelocidad.class);
+                    //Intent intent = new Intent(context, SeleccionaEntrenamientoVelocidad.class);
+                    Intent intent = new Intent(context, InsertarIdUsuario.class);
                     intent.putExtra("config",config);
                     context.startActivity(intent);
                 }
@@ -78,9 +82,10 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
         holder.itemView.setTag(item);
 
         holder.nombre.setText(item.getNombre());
-        holder.figura.setText("Figure: "+item.getFigura());
-        holder.ruta.setText("Route: "+item.getRuta());
-        holder.desaparece.setText("Disappears: "+item.getDesaparece());
+        holder.intentos.setText("Intentos: "+item.getIntentos());
+        holder.segundosVelocidad.setText("Velocidad: "+item.getSegundosVelocidad());
+        holder.desapareceInicio.setText("% desaparece inicio: "+item.getDesapareceInicio());
+        holder.desapareceFinal.setText("% desaparece final: "+item.getDesapareceFinal());
     }
 
     @Override

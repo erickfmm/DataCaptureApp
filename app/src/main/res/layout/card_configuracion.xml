@@ -33,40 +33,52 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/figura_config"
+                android:id="@+id/intentos_config"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:text="@string/figura_config"
-                android:textStyle="bold"
                 android:layout_marginStart="10dp"
-                tools:ignore="NestedWeights"
-                android:gravity="center"/>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/intentos_config"
+                android:textStyle="bold"
+                tools:ignore="NestedWeights" />
 
             <TextView
-                android:id="@+id/ruta_config"
+                android:id="@+id/segundosVelocidad_config"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:text="@string/ruta_config"
-                android:textStyle="bold"
                 android:layout_marginStart="10dp"
-                tools:ignore="NestedWeights"
-                android:gravity="center"/>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/segundosVelocidad_config"
+                android:textStyle="bold"
+                tools:ignore="NestedWeights" />
 
             <TextView
-                android:id="@+id/desaparece_config"
+                android:id="@+id/desapareceInicio_config"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:text="@string/desaparece_config"
-                android:textStyle="bold"
                 android:layout_marginStart="10dp"
-                tools:ignore="NestedWeights"
-                android:gravity="center"/>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/desapareceFinal_config"
+                android:textStyle="bold"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:id="@+id/desapareceFinal"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/desapareceFinal_config"
+                android:textStyle="bold"
+                tools:ignore="NestedWeights" />
 
             <View
                 android:id="@+id/linea_config"

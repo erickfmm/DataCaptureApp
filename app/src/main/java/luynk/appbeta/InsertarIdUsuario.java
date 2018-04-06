@@ -35,8 +35,8 @@ public class InsertarIdUsuario extends Activity {
 
         config = getIntent().getParcelableExtra("config");
 
-        seconds =  getIntent().getIntExtra("seconds", 0);
-        entrenamiento = getIntent().getIntExtra("entrenamiento", 0);
+        seconds = Integer.parseInt(config.getSegundosVelocidad());// getIntent().getIntExtra("seconds", 0);
+        entrenamiento = Integer.parseInt(config.getIntentos());// getIntent().getIntExtra("entrenamiento", 0);
         contador_entrenamientos = 0;
 
         percent = 100/seconds; //Percent of screen in 1 second
@@ -49,7 +49,9 @@ public class InsertarIdUsuario extends Activity {
 
         float x_dir = aux.floatValue();
 
-        String ruta_aux = config.getRuta();
+        //TODO: cambiar esto para que reccorra todas las rutas
+        //String ruta_aux = config.getRuta();
+        String ruta_aux = "route1";
 
         //Calcular movimiento del objeto
 
@@ -92,7 +94,7 @@ public class InsertarIdUsuario extends Activity {
                         intent.putExtra("config",config);
                         intent.putExtra("idUsuario", id);
                         intent.putExtra("points", points);
-                        intent.putExtra("entrenamiento", entrenamiento);
+                        //intent.putExtra("entrenamiento", entrenamiento);
                         intent.putExtra("contador_entrenamientos", contador_entrenamientos);
                         view.getContext().startActivity(intent);
                     }

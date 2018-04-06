@@ -19,9 +19,9 @@ public class SeleccionaFigura extends Activity {
         setContentView(R.layout.activity_selecciona_figura);
 
         config = getIntent().getParcelableExtra("config");
-
+        //TODO: eliminar esto cuando se esté seguro que es seguro
         //Selecciona Cuadrado
-        ImageButton cuadrado = (ImageButton) findViewById(R.id.ibCuadrado);
+        /*ImageButton cuadrado = (ImageButton) findViewById(R.id.ibCuadrado);
         cuadrado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +69,7 @@ public class SeleccionaFigura extends Activity {
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }
-        });
+        });*/
 
         //Fin OnCreate
     }

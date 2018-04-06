@@ -221,12 +221,14 @@ public class Activity_Entrenamiento_Layout extends View {
                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.getContext().startActivity(newIntent);
                 }else {
-                    Intent intent = new Intent(this.getContext(), Entrenamiento.class);
+                    //Intent intent = new Intent(this.getContext(), Entrenamiento.class);
+                    Intent intent = new Intent(this.getContext(), Contador.class);
                     intent.putExtra("config",config);
                     intent.putExtra("idUsuario", idUsuario);
                     intent.putExtra("rootPathUser", rootPathUser);
                     intent.putExtra("points", points);
                     intent.putExtra("entrenamiento", entrenamientos);
+                    intent.putExtra("aux", "entrenamiento");
                     intent.putExtra("contador_entrenamientos", contador_entrenamientos);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.getContext().startActivity(intent);
@@ -239,11 +241,14 @@ public class Activity_Entrenamiento_Layout extends View {
                 pointPos++;
 
                 //Dibujar el objeto
-                if (config.getFigura().contains("square"))
+                //TODO: cambiar acá para recorrer todas las figuras
+                //String figura = config.getFigura();
+                String figura = "circle";
+                if (figura.contains("square"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
-                else if (config.getFigura().contains("circle"))
+                else if (figura.contains("circle"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
-                else if (config.getFigura().contains("triangle"))
+                else if (figura.contains("triangle"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
                 else
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);

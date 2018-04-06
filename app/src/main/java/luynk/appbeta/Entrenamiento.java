@@ -24,7 +24,7 @@ public class Entrenamiento extends Activity {
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
         points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
-        entrenamientos = getIntent().getIntExtra("entrenamiento", 0);
+        entrenamientos = Integer.parseInt(config.getIntentos());//getIntent().getIntExtra("entrenamiento", 0);
         contador_entrenamientos = getIntent().getIntExtra("contador_entrenamientos", 0);
 
         if (contador_entrenamientos>0){

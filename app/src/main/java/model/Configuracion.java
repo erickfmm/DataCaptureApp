@@ -7,19 +7,22 @@ import android.os.Parcelable;
 public class Configuracion implements Parcelable{
     private String id;
     private String nombre;
-    private String figura;
-    private String ruta;
-    private String desaparece;
+    private String intentos;
+    private String segundosVelocidad;
+    private String desapareceInicio;
+    private String desapareceFinal;
 
     public Configuracion() {
     }
 
-    public Configuracion(String id, String nombre, String figura, String ruta, String desaparece) {
+    public Configuracion(String id, String nombre, String intentos, String segundosVelocidad,
+                         String desapareceInicio, String desapareceFinal) {
         this.id = id;
         this.nombre = nombre;
-        this.figura = figura;
-        this.ruta = ruta;
-        this.desaparece = desaparece;
+        this.intentos = intentos;
+        this.segundosVelocidad = segundosVelocidad;
+        this.desapareceInicio = desapareceInicio;
+        this.desapareceFinal = desapareceFinal;
     }
 
 
@@ -40,41 +43,50 @@ public class Configuracion implements Parcelable{
         this.nombre = nombre;
     }
 
-    public String getFigura() {
-        return figura;
+    public String getIntentos() {
+        return intentos;
     }
 
-    public void setFigura(String figura) {
-        this.figura = figura;
+    public void setIntentos(int intentos) {
+        this.intentos = Integer.toString(intentos);
     }
 
-    public String getRuta() {
-        return ruta;
+    public String getSegundosVelocidad() {
+        return segundosVelocidad;
     }
 
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
+    public void setSegundosVelocidad(int segundosVelocidad) {
+        this.segundosVelocidad = Integer.toString(segundosVelocidad);
     }
 
-    public String getDesaparece() {
-        return desaparece;
+    public String getDesapareceInicio() {
+        return desapareceInicio;
     }
 
-    public void setDesaparece(String desaparece) {
-        this.desaparece = desaparece;
+    public void setDesapareceInicio(int desapareceInicio) {
+        this.desapareceInicio = Integer.toString(desapareceInicio);
+    }
+
+    public String getDesapareceFinal() {
+        return desapareceFinal;
+    }
+
+    public void setDesapareceFinal(int desapareceFinal) {
+        this.desapareceFinal = Integer.toString(desapareceFinal);
     }
 
 
     //Parcelable part
     public Configuracion(Parcel in){
-        String[] data= new String[5];
+        String[] data= new String[6];
 
         in.readStringArray(data);
         this.id = data[0];
         this.nombre = data[1];
-        this.figura = data[2];
-        this.ruta = data[3];
-        this.desaparece = data[4];
+        this.intentos = data[2];
+        this.segundosVelocidad = data[3];
+        this.desapareceInicio = data[4];
+        this.desapareceFinal = data[5];
     }
 
     @Override
@@ -90,9 +102,10 @@ public class Configuracion implements Parcelable{
         dest.writeStringArray(new String[]{
                 this.id,
                 this.nombre,
-                this.figura,
-                this.ruta,
-                this.desaparece
+                this.intentos,
+                this.segundosVelocidad,
+                this.desapareceInicio,
+                this.desapareceFinal
         });
     }
 

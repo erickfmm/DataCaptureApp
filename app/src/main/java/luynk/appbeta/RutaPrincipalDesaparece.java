@@ -13,7 +13,7 @@ public class RutaPrincipalDesaparece extends Activity {
 
     Activity_RutaPrincipalDesaparece_Layout rutaUnoDesaparece_layoutView;
     Configuracion config;
-    String porcentaje, idUsuario, rootPathUser;
+    String idUsuario, rootPathUser;
     private ArrayList<Puntos> points = new ArrayList<>();
 
     @Override
@@ -21,7 +21,6 @@ public class RutaPrincipalDesaparece extends Activity {
         super.onCreate(savedInstanceState);
 
         config = getIntent().getParcelableExtra("config");
-        porcentaje = config.getDesaparece();
         idUsuario = getIntent().getStringExtra("idUsuario");
         points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
         rootPathUser = getIntent().getStringExtra("rootPathUser");

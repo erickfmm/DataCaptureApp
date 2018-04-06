@@ -5,25 +5,52 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 
-import db.DataBaseManagerConfig;
 import model.Configuracion;
 
 
 public class SeleccionaDondeDesaparece extends Activity{
 
     Configuracion config;
-    DataBaseManagerConfig managerConfig;
 
+    NumberPicker des_inicio, des_final;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selecciona_desaparece);
 
-        managerConfig = new DataBaseManagerConfig(this);
+        des_inicio = (NumberPicker) findViewById(R.id.picker_desaparece_inicio);
+        des_final = (NumberPicker) findViewById(R.id.picker_desaparece_final);
+
+        des_inicio.setMinValue(0);
+        des_inicio.setMaxValue(99);
+
+        des_final.setMinValue(0);
+        des_final.setMaxValue(100);
+
+        des_inicio.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                des_final.setMinValue(newVal+1);
+            }
+        });
 
         config = getIntent().getParcelableExtra("config");
+
+        Button sel = (Button) findViewById(R.id.button_select);
+        sel.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                config.setDesapareceInicio(des_inicio.getValue());
+                config.setDesapareceFinal(des_final.getValue());
+                   Intent intent = new Intent(view.getContext(), SeleccionaEntrenamientoVelocidad.class);
+                   intent.putExtra("config",config);
+                   view.getContext().startActivity(intent);
+               }
+
+       });/*
 
         Button op1 = (Button) findViewById(R.id.b2550);
         op1.setOnClickListener(new View.OnClickListener() {
@@ -31,9 +58,7 @@ public class SeleccionaDondeDesaparece extends Activity{
             public void onClick(View view) {
                 config.setDesaparece("2550");
                 managerConfig.insertar(null, config.getNombre(), config.getFigura(), config.getRuta(), config.getDesaparece());
-                Intent intent = new Intent(view.getContext(), SeleccionaEntrenamientoVelocidad.class);
-                intent.putExtra("config",config);
-                view.getContext().startActivity(intent);
+
             }
         });
 
@@ -59,7 +84,7 @@ public class SeleccionaDondeDesaparece extends Activity{
                 intent.putExtra("config",config);
                 view.getContext().startActivity(intent);
             }
-        });
+        });*/
 
 
 

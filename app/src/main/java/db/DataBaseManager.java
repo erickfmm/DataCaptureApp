@@ -19,8 +19,10 @@ public abstract class DataBaseManager {
         db.close();
     }
 
-    abstract public void insertar(String id, String nombre, String figura, String ruta, String desaparece);
-    abstract public void actualizar(String id, String nombre, String figura, String ruta, String desaparece);
+    abstract public void insertar(String id, String nombre, String intentos, String segundosVelocidad,
+                                  String desapareceInicio, String desapareceFinal);
+    abstract public void actualizar(String id, String nombre, String intentos, String segundosVelocidad,
+                                    String desapareceInicio, String desapareceFinal);
 
     abstract public void eliminar(String id);
     abstract public void eliminarTodo();

@@ -197,11 +197,13 @@ public class Activity_RutaPrincipal_Layout extends View {
                 }
 
                 // nueva activity
-                Intent newIntent = new Intent(this.getContext(), RutaPrincipalDesaparece.class);
+                //Intent newIntent = new Intent(this.getContext(), RutaPrincipalDesaparece.class);
+                Intent newIntent = new Intent(this.getContext(), Contador.class);
                 newIntent.putExtra("config",config);
                 newIntent.putExtra("idUsuario", idUsuario);
                 newIntent.putExtra("rootPathUser", rootPathUser);
                 newIntent.putExtra("points", points);
+                newIntent.putExtra("aux", "desaparece");
                 newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.getContext().startActivity(newIntent);
 
@@ -213,11 +215,14 @@ public class Activity_RutaPrincipal_Layout extends View {
                 pointPos++;
 
                 //Dibujar el objeto
-                if (config.getFigura().contains("square"))
+                //TODO: cambiar acá para recorrer todas las figuras
+                //String figura = config.getFigura();
+                String figura = "circle";
+                if (figura.contains("square"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
-                else if (config.getFigura().contains("circle"))
+                else if (figura.contains("circle"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
-                else if (config.getFigura().contains("triangle"))
+                else if (figura.contains("triangle"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
                 else
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);

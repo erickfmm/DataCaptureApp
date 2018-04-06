@@ -175,37 +175,32 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
                 pointPos++;
 
                 //Para clase desaparece
-                String porcentaje = config.getDesaparece();
+                int porcentajeInferior = Integer.parseInt(config.getDesapareceInicio());
+                int porcentajeSuperior = Integer.parseInt(config.getDesapareceFinal());
 
-                int inferior;
-                double superior;
-                if(porcentaje.contains("2550")){
-                    inferior=1;
-                    superior = 1.5;
-                }else if (porcentaje.contains("5075")){
-                    inferior=2;
-                    superior=2.5;
-                }else{
-                    inferior=3;
-                    superior = 3.5;
-                }
-
-                int aux = canvas.getWidth()/4;
-                if (elemento_x>=aux*inferior && elemento_x<aux*superior)
+                int canvasSize = canvas.getWidth();
+                if (elemento_x>=canvasSize/100*porcentajeInferior && elemento_x<canvasSize/100*porcentajeSuperior)
                 {
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(
                             elemento, 1, 1, false);
                     canvas.drawBitmap(resizedBitmap, elemento_x, elemento_y, null);
                 }else{
                     //Dibujar el objeto
-                    if (config.getFigura().contains("square"))
+                    //TODO: cambiar acá para recorrer todas las figuras
+                    //String figura = config.getFigura();
+                    String figura = "circle";
+                    if (figura.contains("square")){
                         elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
-                    else if (config.getFigura().contains("circle"))
+                    }
+                    else if (figura.contains("circle")){
                         elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
-                    else if (config.getFigura().contains("triangle"))
+                    }
+                    else if (figura.contains("triangle")){
                         elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
-                    else
+                    }
+                    else{
                         elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);
+                    }
                     canvas.drawBitmap(elemento, elemento_x, elemento_y, null);
                 }
 
