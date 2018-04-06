@@ -116,6 +116,7 @@ public class Activity_RutaPrincipal_Layout extends View {
             f.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(context, "We need Write External Storage permission. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
         }
 
         fos = new FileOutputStream(f);
