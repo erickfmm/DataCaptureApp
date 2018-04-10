@@ -52,8 +52,9 @@ public class SeleccionaEntrenamientoVelocidad extends Activity{
                     config.setIntentos(entrenamientos.getValue());
                     managerConfig.insertar(null, config.getNombre(), config.getIntentos(),
                             config.getSegundosVelocidad(), config.getDesapareceInicio(), config.getDesapareceFinal());
-                    Intent intent = new Intent(view.getContext(), InsertarIdUsuario.class);
-                    intent.putExtra("config",config);
+                    //Intent intent = new Intent(view.getContext(), InsertarIdUsuario.class);
+                Intent intent = new Intent(view.getContext(), SeleccionaConfiguracion.class);
+                //intent.putExtra("config",config);
                     //intent.putExtra("seconds", speed);
                     //intent.putExtra("entrenamiento", entrenamiento);
                     view.getContext().startActivity(intent);

@@ -13,8 +13,8 @@ public class Entrenamiento extends Activity {
     Activity_Entrenamiento_Layout entrenamiento_layout;
     Configuracion config;
     String idUsuario, rootPathUser;
-    private ArrayList<Puntos> points = new ArrayList<>();
-    int entrenamientos, contador_entrenamientos;
+    //private ArrayList<Puntos> points = new ArrayList<>();
+    int entrenamientos, contador_entrenamientos, contador_ruta;
 
 
     @Override
@@ -23,9 +23,10 @@ public class Entrenamiento extends Activity {
 
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
-        points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
+        //points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
         entrenamientos = Integer.parseInt(config.getIntentos());//getIntent().getIntExtra("entrenamiento", 0);
         contador_entrenamientos = getIntent().getIntExtra("contador_entrenamientos", 0);
+        contador_ruta = getIntent().getIntExtra("contador_ruta", 0);
 
         if (contador_entrenamientos>0){
             rootPathUser = getIntent().getStringExtra("rootPathUser");
@@ -56,7 +57,9 @@ public class Entrenamiento extends Activity {
         return this.config;
     }
 
-    public ArrayList<Puntos> getPoints() { return this.points; }
+    //public ArrayList<Puntos> getPoints() { return this.points; }
+    
+    public int getContador_ruta(){return this.contador_ruta;}
 
     public int getEntrenamientos() { return this.entrenamientos; }
 

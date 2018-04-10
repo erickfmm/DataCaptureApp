@@ -48,7 +48,7 @@ public class Activity_Entrenamiento_Layout extends View {
     private Paint mPaint;
     private Path mPath;
 
-    int pointPos = 0, entrenamientos, contador_entrenamientos;
+    int pointPos = 0, entrenamientos, contador_entrenamientos, contador_ruta;
 
     Configuracion config;
     String idUsuario, todayString, rootPathUser;
@@ -103,10 +103,14 @@ public class Activity_Entrenamiento_Layout extends View {
 
         config = ((Entrenamiento)getContext()).getConfig();
         idUsuario = ((Entrenamiento)getContext()).getIdUsuario();
-        points = ((Entrenamiento)getContext()).getPoints();
+        //points = ((Entrenamiento)getContext()).getPoints();
         entrenamientos = ((Entrenamiento)getContext()).getEntrenamientos();
         contador_entrenamientos = ((Entrenamiento)getContext()).getContador_entrenamientos();
-        contador_entrenamientos++;
+        contador_ruta = ((Entrenamiento)getContext()).getContador_ruta();
+
+        System.out.println("Act_Entr-contador entrenamientos: "+contador_entrenamientos);
+        System.out.println("Act_Entr-contador ruta: "+contador_ruta);
+        points = Ruta.getRuta(contador_ruta, Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
 
         Date todayDate = Calendar.getInstance().getTime();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
@@ -210,14 +214,22 @@ public class Activity_Entrenamiento_Layout extends View {
                 }
 
                 // nueva activity
+                contador_ruta++;
+                if(contador_ruta!=0 && contador_ruta %4 == 0){
+                    contador_entrenamientos++;
+                    contador_ruta = 0;
+                }
+
                 if (contador_entrenamientos == entrenamientos){
+                    contador_ruta = 0;
                     Intent newIntent = new Intent(this.getContext(), ExplicacionPrincipal.class);
                     newIntent.putExtra("config",config);
                     newIntent.putExtra("idUsuario", idUsuario);
                     newIntent.putExtra("rootPathUser", rootPathUser);
-                    newIntent.putExtra("points", points);
+                    //newIntent.putExtra("points", points);
                     newIntent.putExtra("entrenamiento", entrenamientos);
                     newIntent.putExtra("contador_entrenamientos", contador_entrenamientos);
+                    newIntent.putExtra("contador_ruta", contador_ruta);
                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.getContext().startActivity(newIntent);
                 }else {
@@ -226,10 +238,11 @@ public class Activity_Entrenamiento_Layout extends View {
                     intent.putExtra("config",config);
                     intent.putExtra("idUsuario", idUsuario);
                     intent.putExtra("rootPathUser", rootPathUser);
-                    intent.putExtra("points", points);
+                    //intent.putExtra("points", points);
                     intent.putExtra("entrenamiento", entrenamientos);
                     intent.putExtra("aux", "entrenamiento");
                     intent.putExtra("contador_entrenamientos", contador_entrenamientos);
+                    intent.putExtra("contador_ruta", contador_ruta);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.getContext().startActivity(intent);
                 }
@@ -243,7 +256,8 @@ public class Activity_Entrenamiento_Layout extends View {
                 //Dibujar el objeto
                 //TODO: cambiar acá para recorrer todas las figuras
                 //String figura = config.getFigura();
-                String figura = "circle";
+                //String figura = "circle";
+                String figura = Ruta.getFigure(contador_ruta);
                 if (figura.contains("square"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
                 else if (figura.contains("circle"))
@@ -289,9 +303,9 @@ public class Activity_Entrenamiento_Layout extends View {
         return true;
     }
 
-   /* public static int getScreenWidth() {
+    public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
-    }*/
+    }
 
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;

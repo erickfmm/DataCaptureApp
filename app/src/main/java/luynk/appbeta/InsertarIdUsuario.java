@@ -21,7 +21,7 @@ public class InsertarIdUsuario extends Activity {
     double speed, percent, seconds, t_aux, yvalue;
     float elemento_x=0, elemento_y=0;
     boolean flag;
-    int entrenamiento, contador_entrenamientos;
+    int entrenamiento, contador_entrenamientos, contador_ruta;
 
     private ArrayList<Puntos> points = new ArrayList<>();
 
@@ -38,8 +38,9 @@ public class InsertarIdUsuario extends Activity {
         seconds = Integer.parseInt(config.getSegundosVelocidad());// getIntent().getIntExtra("seconds", 0);
         entrenamiento = Integer.parseInt(config.getIntentos());// getIntent().getIntExtra("entrenamiento", 0);
         contador_entrenamientos = 0;
+        contador_ruta = 0;
 
-        percent = 100/seconds; //Percent of screen in 1 second
+        /*percent = 100/seconds; //Percent of screen in 1 second
         speed = percent/6000;
         t_aux = 1 / (seconds*60);
         int dim = (int) seconds * 60;
@@ -79,7 +80,7 @@ public class InsertarIdUsuario extends Activity {
             if(i == dim-1){
                 flag = true;
             }
-        }
+        }*/
 
         Button continuar = (Button) findViewById(R.id.btIdUsuario);
         continuar.setOnClickListener(new View.OnClickListener() {
@@ -89,15 +90,16 @@ public class InsertarIdUsuario extends Activity {
                     Toast.makeText(view.getContext(), "You must insert an ID.", Toast.LENGTH_SHORT).show();
                 }else {
                     String id = idUsuario.getText().toString();
-                    if(flag){
+                    //if(flag){
                         Intent intent = new Intent(view.getContext(), ExplicacionEntrenamiento.class);
                         intent.putExtra("config",config);
                         intent.putExtra("idUsuario", id);
-                        intent.putExtra("points", points);
+                        //intent.putExtra("points", points);
                         //intent.putExtra("entrenamiento", entrenamiento);
                         intent.putExtra("contador_entrenamientos", contador_entrenamientos);
+                        intent.putExtra("contador_ruta", contador_ruta);
                         view.getContext().startActivity(intent);
-                    }
+                    //}
                 }
             }
         });

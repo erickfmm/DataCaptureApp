@@ -36,7 +36,7 @@ public class Activity_RutaPrincipal_Layout extends View {
 
     Bitmap elemento;
     float elemento_x=0, elemento_y=0;
-    int elementoHeight, elementoWidth;
+    int elementoHeight, elementoWidth, contador_ruta;
     String corX="NaN", corY="NaN";
     boolean flag;
     double speed, percent, seconds, t_aux;
@@ -100,8 +100,12 @@ public class Activity_RutaPrincipal_Layout extends View {
 
         config = ((RutaPrincipal)getContext()).getConfig();
         idUsuario = ((RutaPrincipal)getContext()).getIdUsuario();
-        points = ((RutaPrincipal)getContext()).getPoints();
+        //points = ((RutaPrincipal)getContext()).getPoints();
         rootPathUser = ((RutaPrincipal)getContext()).getRootPathUser();
+        contador_ruta = ((RutaPrincipal)getContext()).getContador_ruta();
+        points = Ruta.getRuta(contador_ruta, Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
+
+        System.out.println("Act_Prin-contador ruta: "+contador_ruta);
 
         Date todayDate = Calendar.getInstance().getTime();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
@@ -198,14 +202,30 @@ public class Activity_RutaPrincipal_Layout extends View {
 
                 // nueva activity
                 //Intent newIntent = new Intent(this.getContext(), RutaPrincipalDesaparece.class);
-                Intent newIntent = new Intent(this.getContext(), Contador.class);
-                newIntent.putExtra("config",config);
-                newIntent.putExtra("idUsuario", idUsuario);
-                newIntent.putExtra("rootPathUser", rootPathUser);
-                newIntent.putExtra("points", points);
-                newIntent.putExtra("aux", "desaparece");
-                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                this.getContext().startActivity(newIntent);
+                if(contador_ruta!=0 && contador_ruta%4==0){
+                    contador_ruta = 0;
+                    Intent newIntent = new Intent(this.getContext(), Contador.class);
+                    newIntent.putExtra("config",config);
+                    newIntent.putExtra("idUsuario", idUsuario);
+                    newIntent.putExtra("rootPathUser", rootPathUser);
+                    //newIntent.putExtra("points", points);
+                    newIntent.putExtra("contador_ruta", contador_ruta);
+                    newIntent.putExtra("aux", "desaparece");
+                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.getContext().startActivity(newIntent);
+                }else{
+                    contador_ruta++;
+                    Intent newIntent = new Intent(this.getContext(), Contador.class);
+                    newIntent.putExtra("config",config);
+                    newIntent.putExtra("idUsuario", idUsuario);
+                    newIntent.putExtra("rootPathUser", rootPathUser);
+                    //newIntent.putExtra("points", points);
+                    newIntent.putExtra("contador_ruta", contador_ruta);
+                    newIntent.putExtra("aux", "principal");
+                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.getContext().startActivity(newIntent);
+                }
+
 
             } else {
 
@@ -217,7 +237,8 @@ public class Activity_RutaPrincipal_Layout extends View {
                 //Dibujar el objeto
                 //TODO: cambiar acá para recorrer todas las figuras
                 //String figura = config.getFigura();
-                String figura = "circle";
+                //String figura = "circle";
+                String figura = Ruta.getFigure(contador_ruta);
                 if (figura.contains("square"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
                 else if (figura.contains("circle"))
@@ -263,9 +284,9 @@ public class Activity_RutaPrincipal_Layout extends View {
         return true;
     }
 
-   /* public static int getScreenWidth() {
+    public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
-    }*/
+    }
 
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;

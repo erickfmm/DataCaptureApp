@@ -12,7 +12,7 @@ public class ExplicacionEntrenamiento extends Activity {
 
     String idUsuario, aux;
     Configuracion config;
-    int contador_entrenamientos;
+    int contador_entrenamientos, contador_ruta;
     private ArrayList<Puntos> points = new ArrayList<>();
 
     @Override
@@ -23,9 +23,10 @@ public class ExplicacionEntrenamiento extends Activity {
 
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
-        points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
+        //points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
         //entrenamientos = Integer.parseInt(config.getIntentos());// getIntent().getIntExtra("entrenamiento", 0);
         contador_entrenamientos = getIntent().getIntExtra("contador_entrenamientos", 0);
+        contador_ruta = getIntent().getIntExtra("contador_ruta", 0);
 
         aux = "entrenamiento";
 
@@ -33,14 +34,15 @@ public class ExplicacionEntrenamiento extends Activity {
         continuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                        Intent intent = new Intent(view.getContext(), Contador.class);
-                        intent.putExtra("config",config);
-                        intent.putExtra("idUsuario", idUsuario);
-                        intent.putExtra("points", points);
-                        //intent.putExtra("entrenamiento", entrenamientos);
-                        intent.putExtra("contador_entrenamientos", contador_entrenamientos);
-                        intent.putExtra("aux", aux);
-                        view.getContext().startActivity(intent);
+                Intent intent = new Intent(view.getContext(), Contador.class);
+                intent.putExtra("config",config);
+                intent.putExtra("idUsuario", idUsuario);
+                //intent.putExtra("points", points);
+                //intent.putExtra("entrenamiento", entrenamientos);
+                intent.putExtra("contador_entrenamientos", contador_entrenamientos);
+                intent.putExtra("contador_ruta", contador_ruta);
+                intent.putExtra("aux", aux);
+                view.getContext().startActivity(intent);
             }
         });
     }

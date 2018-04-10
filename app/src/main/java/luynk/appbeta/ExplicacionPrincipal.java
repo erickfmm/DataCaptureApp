@@ -14,8 +14,8 @@ public class ExplicacionPrincipal extends Activity {
 
     String idUsuario, aux, rootPathUser;
     Configuracion config;
-    int entrenamientos, contador_entrenamientos;
-    private ArrayList<Puntos> points = new ArrayList<>();
+    int entrenamientos, contador_entrenamientos, contador_ruta;
+    //private ArrayList<Puntos> points = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +25,10 @@ public class ExplicacionPrincipal extends Activity {
 
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
-        points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
+        //points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
         entrenamientos = Integer.parseInt(config.getIntentos());//getIntent().getIntExtra("entrenamiento", 0);
         contador_entrenamientos = getIntent().getIntExtra("contador_entrenamientos", 0);
+        contador_ruta = getIntent().getIntExtra("contador_ruta", 0);
         rootPathUser = getIntent().getStringExtra("rootPathUser");
         aux = "principal";
 
@@ -35,15 +36,16 @@ public class ExplicacionPrincipal extends Activity {
         continuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                        Intent intent = new Intent(view.getContext(), Contador.class);
-                        intent.putExtra("config",config);
-                        intent.putExtra("idUsuario", idUsuario);
-                        intent.putExtra("points", points);
-                        intent.putExtra("entrenamiento", entrenamientos);
-                        intent.putExtra("contador_entrenamientos", contador_entrenamientos);
-                        intent.putExtra("rootPathUser", rootPathUser);
-                        intent.putExtra("aux", aux);
-                        view.getContext().startActivity(intent);
+                Intent intent = new Intent(view.getContext(), Contador.class);
+                intent.putExtra("config",config);
+                intent.putExtra("idUsuario", idUsuario);
+                //intent.putExtra("points", points);
+                intent.putExtra("entrenamiento", entrenamientos);
+                intent.putExtra("contador_entrenamientos", contador_entrenamientos);
+                intent.putExtra("contador_ruta", contador_ruta);
+                intent.putExtra("rootPathUser", rootPathUser);
+                intent.putExtra("aux", aux);
+                view.getContext().startActivity(intent);
             }
         });
     }
