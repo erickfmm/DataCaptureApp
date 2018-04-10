@@ -36,7 +36,7 @@ public class Activity_Entrenamiento_Layout extends View {
     //Arrays para guardar las rutas del usuario
     private ArrayList<Posicion> ruta = new ArrayList<>();
     private ArrayList<Posicion> rutaObjeto = new ArrayList<>();
-    private ArrayList<Puntos> points = new ArrayList<>();
+    private ArrayList<Puntos> points;// = new ArrayList<>();
 
     Bitmap elemento;
     float elemento_x=0, elemento_y=0;
@@ -250,6 +250,8 @@ public class Activity_Entrenamiento_Layout extends View {
             } else {
                 elemento_x = points.get(pointPos).getX();
                 elemento_y = points.get(pointPos).getY();
+
+                //System.out.println("el_x: "+elemento_x+"\tel_y: "+elemento_y);
 
                 pointPos++;
 

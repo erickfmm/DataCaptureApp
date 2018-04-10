@@ -4,16 +4,17 @@ import java.util.ArrayList;
 
 public class Ruta {
     public static ArrayList<Puntos> getRuta(int ruta, int seconds, int screenWidth, int screenHeight){
-        double percent = 100/seconds; //Percent of screen in 1 second
-        double speed = percent/6000;
-        double t_aux = 1 / (seconds*60);
-        int dim = (int) seconds * 60;
+        double percent = 100.0/seconds; //Percent of screen in 1 second
+        double speed = percent/6000.0;
+        double t_aux = 1.0 / (seconds*60.0);
+        int dim = (int) (seconds * 60.0);
         boolean flag = false;
         double yvalue;
         Double aux = screenWidth * speed;
 
         float x_dir = aux.floatValue();
 
+        System.out.println("t_aux: "+t_aux+"\tseconds: "+seconds+"\tmit_aux: "+(1.0 / (seconds*60.0)));
         System.out.println("width: "+screenWidth+"\theight: "+screenHeight);
         System.out.println("ruta: "+ruta);
         ruta = ruta % 4;
@@ -42,7 +43,9 @@ public class Ruta {
                     break;
             }
 
-            t_aux = t_aux + (1 / (seconds * 60));
+            //System.out.println("t_aux: "+t_aux+"\ty_value: "+yvalue+"\telem_y: "+elemento_y);
+
+            t_aux = t_aux + (1.0 / (seconds * 60.0));
             points.add(new Puntos(elemento_x, elemento_y));
 
             if(i == dim-1){
