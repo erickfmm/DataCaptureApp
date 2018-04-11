@@ -8,6 +8,7 @@ public class Configuracion implements Parcelable{
     private String id;
     private String nombre;
     private String intentos;
+    private String trialNumber;
     private String segundosVelocidad;
     private String desapareceInicio;
     private String desapareceFinal;
@@ -16,10 +17,11 @@ public class Configuracion implements Parcelable{
     }
 
     public Configuracion(String id, String nombre, String intentos, String segundosVelocidad,
-                         String desapareceInicio, String desapareceFinal) {
+                         String desapareceInicio, String desapareceFinal, String trialNumber) {
         this.id = id;
         this.nombre = nombre;
         this.intentos = intentos;
+        this.trialNumber = trialNumber;
         this.segundosVelocidad = segundosVelocidad;
         this.desapareceInicio = desapareceInicio;
         this.desapareceFinal = desapareceFinal;
@@ -75,10 +77,19 @@ public class Configuracion implements Parcelable{
         this.desapareceFinal = Integer.toString(desapareceFinal);
     }
 
+    public String getTrialNumber() {
+        return trialNumber;
+    }
+
+    public void setTrialNumber(int trialNumber) {
+        this.trialNumber = Integer.toString(trialNumber);
+    }
+
+
 
     //Parcelable part
     public Configuracion(Parcel in){
-        String[] data= new String[6];
+        String[] data= new String[7];
 
         in.readStringArray(data);
         this.id = data[0];
@@ -87,6 +98,7 @@ public class Configuracion implements Parcelable{
         this.segundosVelocidad = data[3];
         this.desapareceInicio = data[4];
         this.desapareceFinal = data[5];
+        this.trialNumber = data[6];
     }
 
     @Override
@@ -105,7 +117,8 @@ public class Configuracion implements Parcelable{
                 this.intentos,
                 this.segundosVelocidad,
                 this.desapareceInicio,
-                this.desapareceFinal
+                this.desapareceFinal,
+                this.trialNumber
         });
     }
 

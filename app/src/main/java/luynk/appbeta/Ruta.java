@@ -1,6 +1,7 @@
 package luynk.appbeta;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Ruta {
     public static ArrayList<Puntos> getRuta(int ruta, int seconds, int screenWidth, int screenHeight){
@@ -74,5 +75,21 @@ public class Ruta {
         }
         //System.out.println("ruta: "+ruta+"\tfigura: "+figura);
         return figura;
+    }
+
+    public static int[] chooseRoutes(){
+        Random rand = new Random();
+        int[][] rutasPosibles = new int[][]{
+            {0,1,2},
+            {1,0,2},
+            {0,1,3},
+            {0,2,3},
+            {0,3,2},
+            {1,2,3},
+            {3,1,2}
+        };
+        int indexRuta = rand.nextInt(rutasPosibles.length);
+
+        return rutasPosibles[indexRuta];
     }
 }

@@ -3,6 +3,7 @@ package adaptadores;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
         protected TextView segundosVelocidad;
         protected TextView desapareceInicio;
         protected TextView desapareceFinal;
+        protected TextView trialNumber;
 
         public CartaViewHolder(View view){
             super(view);
@@ -43,6 +45,7 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
             this.segundosVelocidad = (TextView) view.findViewById(R.id.segundosVelocidad_config);
             this.desapareceInicio = (TextView) view.findViewById(R.id.desapareceInicio_config);
             this.desapareceFinal = (TextView) view.findViewById(R.id.desapareceFinal);
+            this.trialNumber = (TextView) view.findViewById(R.id.intentos_trial);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -54,7 +57,8 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
                             intentos.getText().toString().replaceFirst("^(.)*: ", ""),
                             segundosVelocidad.getText().toString().replaceFirst("^(.)*: ", ""),
                             desapareceInicio.getText().toString().replaceFirst("^(.)*: ", ""),
-                            desapareceFinal.getText().toString().replaceFirst("^(.)*: ", ""));
+                            desapareceFinal.getText().toString().replaceFirst("^(.)*: ", ""),
+                            trialNumber.getText().toString().replaceFirst("^(.)*: ", ""));
 
                     //Intent intent = new Intent(context, SeleccionaEntrenamientoVelocidad.class);
                     Intent intent = new Intent(context, InsertarIdUsuario.class);
@@ -82,10 +86,11 @@ public class CartaConfiguracionAdapter extends RecyclerView.Adapter<CartaConfigu
         holder.itemView.setTag(item);
 
         holder.nombre.setText(item.getNombre());
-        holder.intentos.setText("Intentos: "+item.getIntentos());
-        holder.segundosVelocidad.setText("Velocidad: "+item.getSegundosVelocidad());
-        holder.desapareceInicio.setText("% desaparece inicio: "+item.getDesapareceInicio());
-        holder.desapareceFinal.setText("% desaparece final: "+item.getDesapareceFinal());
+        holder.intentos.setText(mainContext.getString(R.string.intentos_config)+": "+item.getIntentos());
+        holder.segundosVelocidad.setText(mainContext.getString(R.string.segundosVelocidad_config)+": "+item.getSegundosVelocidad());
+        holder.desapareceInicio.setText(mainContext.getString(R.string.desapareceInicio_config)+": "+item.getDesapareceInicio());
+        holder.desapareceFinal.setText(mainContext.getString(R.string.desapareceFinal_config)+": "+item.getDesapareceFinal());
+        holder.trialNumber.setText(mainContext.getString(R.string.trial_config)+": "+item.getTrialNumber());
     }
 
     @Override

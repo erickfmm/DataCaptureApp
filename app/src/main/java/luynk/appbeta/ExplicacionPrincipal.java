@@ -14,8 +14,8 @@ public class ExplicacionPrincipal extends Activity {
 
     String idUsuario, aux, rootPathUser;
     Configuracion config;
-    int entrenamientos, contador_entrenamientos, contador_ruta;
-    //private ArrayList<Puntos> points = new ArrayList<>();
+    int entrenamientos, contador_entrenamientos, contador_ruta, contador_trials;
+    int[] chosen_ruta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +25,13 @@ public class ExplicacionPrincipal extends Activity {
 
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
-        //points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
-        entrenamientos = Integer.parseInt(config.getIntentos());//getIntent().getIntExtra("entrenamiento", 0);
+        entrenamientos = Integer.parseInt(config.getIntentos());
         contador_entrenamientos = getIntent().getIntExtra("contador_entrenamientos", 0);
         contador_ruta = getIntent().getIntExtra("contador_ruta", 0);
         rootPathUser = getIntent().getStringExtra("rootPathUser");
+
+        chosen_ruta = getIntent().getIntArrayExtra("chosen_ruta");
+        contador_trials = getIntent().getIntExtra("contador_trials", 0);
         aux = "principal";
 
         Button continuar = (Button) findViewById(R.id.btExPrincipal);
@@ -43,6 +45,8 @@ public class ExplicacionPrincipal extends Activity {
                 intent.putExtra("entrenamiento", entrenamientos);
                 intent.putExtra("contador_entrenamientos", contador_entrenamientos);
                 intent.putExtra("contador_ruta", contador_ruta);
+                intent.putExtra("chosen_ruta", chosen_ruta);
+                intent.putExtra("contador_trials", contador_trials);
                 intent.putExtra("rootPathUser", rootPathUser);
                 intent.putExtra("aux", aux);
                 view.getContext().startActivity(intent);

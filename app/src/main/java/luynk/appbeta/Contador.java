@@ -13,8 +13,8 @@ public class Contador extends Activity {
 
     String idUsuario, str_aux, rootPathUser;
     Configuracion config;
-    int contador_entrenamientos, contador_ruta;
-    //private ArrayList<Puntos> points = new ArrayList<>();
+    int contador_entrenamientos, contador_ruta, contador_trials;
+    int[] chosen_ruta;
     ImageView contador;
 
     @Override
@@ -25,15 +25,17 @@ public class Contador extends Activity {
 
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
-        //points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
-        //entrenamientos = getIntent().getIntExtra("entrenamiento", 0);
         contador_entrenamientos = getIntent().getIntExtra("contador_entrenamientos", 0);
         contador_ruta = getIntent().getIntExtra("contador_ruta", 0);
         str_aux = getIntent().getStringExtra("aux");
 
-        if (str_aux.contains("principal") || str_aux.contains("desaparece")){
-            rootPathUser = getIntent().getStringExtra("rootPathUser");
-        }
+        contador_trials = getIntent().getIntExtra("contador_trials", 0);
+        chosen_ruta = getIntent().getIntArrayExtra("chosen_ruta");
+        rootPathUser = getIntent().getStringExtra("rootPathUser");
+
+        /*if (str_aux.contains("principal") || str_aux.contains("desaparece")){
+
+        }*/
 
         contador = (ImageView) findViewById(R.id.ivContador);
         contador.setBackgroundResource(R.drawable.tres);
@@ -58,10 +60,10 @@ public class Contador extends Activity {
                     Intent intent = new Intent(Contador.this, Entrenamiento.class);
                     intent.putExtra("config",config);
                     intent.putExtra("idUsuario", idUsuario);
-                    //intent.putExtra("points", points);
-                    //intent.putExtra("entrenamiento", entrenamientos);
                     intent.putExtra("contador_entrenamientos", contador_entrenamientos);
                     intent.putExtra("contador_ruta", contador_ruta);
+                    intent.putExtra("rootPathUser", rootPathUser);
+                    intent.putExtra("chosen_ruta", chosen_ruta);
                     startActivity(intent);
                     finish();
                 }else if(str_aux.contains("desaparece")){
@@ -70,7 +72,8 @@ public class Contador extends Activity {
                     intent.putExtra("idUsuario", idUsuario);
                     intent.putExtra("rootPathUser", rootPathUser);
                     intent.putExtra("contador_ruta", contador_ruta);
-                    //newIntent.putExtra("points", points);
+                    intent.putExtra("chosen_ruta", chosen_ruta);
+                    intent.putExtra("contador_trials", contador_trials);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -79,9 +82,10 @@ public class Contador extends Activity {
                     Intent intent = new Intent(Contador.this, RutaPrincipal.class);
                     intent.putExtra("config",config);
                     intent.putExtra("idUsuario", idUsuario);
-                    //intent.putExtra("points", points);
                     intent.putExtra("rootPathUser", rootPathUser);
                     intent.putExtra("contador_ruta", contador_ruta);
+                    intent.putExtra("chosen_ruta", chosen_ruta);
+                    intent.putExtra("contador_trials", contador_trials);
                     startActivity(intent);
                     finish();
                 }

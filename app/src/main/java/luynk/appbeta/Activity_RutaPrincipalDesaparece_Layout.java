@@ -33,7 +33,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
 
     Bitmap elemento;
     float elemento_x, elemento_y;
-    int elementoHeight, elementoWidth, contador_ruta;
+    int elementoHeight, elementoWidth, contador_ruta, contador_trials, totalTrials;
     boolean flag;
     String corX="NaN", corY="NaN";
 
@@ -41,6 +41,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
     private Path mPath;
 
     int pointPos = 0;
+    int [] chosen_ruta;
 
     Configuracion config;
     String idUsuario, todayString, rootPathUser;
@@ -90,10 +91,12 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
 
         config = ((RutaPrincipalDesaparece)getContext()).getConfig();
         idUsuario = ((RutaPrincipalDesaparece)getContext()).getIdUsuario();
-        //points = ((RutaPrincipalDesaparece)getContext()).getPoints();
         rootPathUser = ((RutaPrincipalDesaparece)getContext()).getRootPathUser();
         contador_ruta = ((RutaPrincipalDesaparece)getContext()).getContador_ruta();
-        points = Ruta.getRuta(contador_ruta, Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
+        chosen_ruta = ((RutaPrincipalDesaparece)getContext()).getChosen_ruta();
+        contador_trials = ((RutaPrincipalDesaparece)getContext()).getContador_trials();
+        totalTrials = ((RutaPrincipalDesaparece)getContext()).getTotalTrials();
+        points = Ruta.getRuta(chosen_ruta[contador_ruta], Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
 
         System.out.println("Act_Des-contador ruta: "+contador_ruta);
 
@@ -166,22 +169,38 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
                 }
 
                 // nueva activity
-                if(contador_ruta!=0 && contador_ruta%4==0){
+                contador_ruta++;
+                if(contador_ruta!=0 && contador_ruta%chosen_ruta.length==0){
                     contador_ruta = 0;
-                    Intent newIntent = new Intent(this.getContext(), SeleccionaConfiguracion.class);
-                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    this.getContext().startActivity(newIntent);
+                    contador_trials++;
+                    if(contador_trials==totalTrials){
+                        Intent newIntent = new Intent(this.getContext(), SeleccionaConfiguracion.class);
+                        newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        this.getContext().startActivity(newIntent);
+                    }else{
+                        Intent intent = new Intent(this.getContext(), Contador.class);
+                        intent.putExtra("config",config);
+                        intent.putExtra("idUsuario", idUsuario);
+                        intent.putExtra("rootPathUser", rootPathUser);
+                        intent.putExtra("contador_ruta", contador_ruta);
+                        intent.putExtra("aux", "principal");
+                        intent.putExtra("chosen_ruta", chosen_ruta);
+                        intent.putExtra("contador_trials", contador_trials);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        this.getContext().startActivity(intent);
+                    }
+
                 }else{
-                    contador_ruta++;
-                    Intent newIntent = new Intent(this.getContext(), Contador.class);
-                    newIntent.putExtra("config",config);
-                    newIntent.putExtra("idUsuario", idUsuario);
-                    newIntent.putExtra("rootPathUser", rootPathUser);
-                    //newIntent.putExtra("points", points);
-                    newIntent.putExtra("contador_ruta", contador_ruta);
-                    newIntent.putExtra("aux", "desaparece");
-                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    this.getContext().startActivity(newIntent);
+                    Intent intent = new Intent(this.getContext(), Contador.class);
+                    intent.putExtra("config",config);
+                    intent.putExtra("idUsuario", idUsuario);
+                    intent.putExtra("rootPathUser", rootPathUser);
+                    intent.putExtra("contador_ruta", contador_ruta);
+                    intent.putExtra("aux", "desaparece");
+                    intent.putExtra("chosen_ruta", chosen_ruta);
+                    intent.putExtra("contador_trials", contador_trials);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.getContext().startActivity(intent);
                 }
 
 
@@ -205,10 +224,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
                     canvas.drawBitmap(resizedBitmap, elemento_x, elemento_y, null);
                 }else{
                     //Dibujar el objeto
-                    //TODO: cambiar acá para recorrer todas las figuras
-                    //String figura = config.getFigura();
-                    //String figura = "circle";
-                    String figura = Ruta.getFigure(contador_ruta);
+                    String figura = Ruta.getFigure(chosen_ruta[contador_ruta]);
                     if (figura.contains("square")){
                         elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
                     }

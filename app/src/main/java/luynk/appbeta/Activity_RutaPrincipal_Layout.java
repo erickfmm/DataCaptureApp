@@ -36,7 +36,7 @@ public class Activity_RutaPrincipal_Layout extends View {
 
     Bitmap elemento;
     float elemento_x=0, elemento_y=0;
-    int elementoHeight, elementoWidth, contador_ruta;
+    int elementoHeight, elementoWidth, contador_ruta, contador_trials;
     String corX="NaN", corY="NaN";
     boolean flag;
     double speed, percent, seconds, t_aux;
@@ -45,6 +45,7 @@ public class Activity_RutaPrincipal_Layout extends View {
     private Path mPath;
 
     int pointPos = 0;
+    int [] chosen_ruta;
 
     Configuracion config;
     String idUsuario, todayString, rootPathUser;
@@ -100,10 +101,11 @@ public class Activity_RutaPrincipal_Layout extends View {
 
         config = ((RutaPrincipal)getContext()).getConfig();
         idUsuario = ((RutaPrincipal)getContext()).getIdUsuario();
-        //points = ((RutaPrincipal)getContext()).getPoints();
         rootPathUser = ((RutaPrincipal)getContext()).getRootPathUser();
         contador_ruta = ((RutaPrincipal)getContext()).getContador_ruta();
-        points = Ruta.getRuta(contador_ruta, Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
+        chosen_ruta = ((RutaPrincipal)getContext()).getChosen_ruta();
+        contador_trials = ((RutaPrincipal)getContext()).getContador_trials();
+        points = Ruta.getRuta(chosen_ruta[contador_ruta], Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
 
         System.out.println("Act_Prin-contador ruta: "+contador_ruta);
 
@@ -148,110 +150,109 @@ public class Activity_RutaPrincipal_Layout extends View {
         canvas.drawPath(mPath, mPaint);
         super.onDraw(canvas);
 
-        //flag para controlar ejecucion de metodo onDraw
-        if(flag) {
+        if (flag) {
 
-            //Crear objeto para obtener ancho y largo
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque, options);
-            elementoHeight = options.outHeight;
-            elementoWidth = options.outWidth;
+        //Crear objeto para obtener ancho y largo
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque, options);
+        elementoHeight = options.outHeight;
+        elementoWidth = options.outWidth;
 
-            //finalizar metodo si se llega al final de la pantalla
-            if (elemento_x >= canvas.getWidth() - elementoWidth) {
-                flag = false;
+        //finalizar metodo si se llega al final de la pantalla
+        if (elemento_x >= canvas.getWidth() - elementoWidth) {
+            flag = false;
 
-                stopRepeatingTask();
+            stopRepeatingTask();
 
-                //Guardar ruta usuario en archivo
-                try {
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(ruta);
-                    oos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                //Guardar ruta objeto en archivo
-                try {
-                    ObjectOutputStream oos = new ObjectOutputStream(fosObj);
-                    oos.writeObject(rutaObjeto);
-                    oos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                //guardar imagen
-                this.setDrawingCacheEnabled(true);
-                this.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-                Bitmap bitmap = this.getDrawingCache();
-                File file = new File(rootPathUser+idUsuario+"_image_"+todayString+".png");
-                FileOutputStream ostream;
-
-                try {
-                    file.createNewFile();
-                    ostream = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
-                    ostream.flush();
-                    ostream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(this.getContext(), "Error when saving the image", Toast.LENGTH_SHORT).show();
-                }
-
-                // nueva activity
-                //Intent newIntent = new Intent(this.getContext(), RutaPrincipalDesaparece.class);
-                if(contador_ruta!=0 && contador_ruta%4==0){
-                    contador_ruta = 0;
-                    Intent newIntent = new Intent(this.getContext(), Contador.class);
-                    newIntent.putExtra("config",config);
-                    newIntent.putExtra("idUsuario", idUsuario);
-                    newIntent.putExtra("rootPathUser", rootPathUser);
-                    //newIntent.putExtra("points", points);
-                    newIntent.putExtra("contador_ruta", contador_ruta);
-                    newIntent.putExtra("aux", "desaparece");
-                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    this.getContext().startActivity(newIntent);
-                }else{
-                    contador_ruta++;
-                    Intent newIntent = new Intent(this.getContext(), Contador.class);
-                    newIntent.putExtra("config",config);
-                    newIntent.putExtra("idUsuario", idUsuario);
-                    newIntent.putExtra("rootPathUser", rootPathUser);
-                    //newIntent.putExtra("points", points);
-                    newIntent.putExtra("contador_ruta", contador_ruta);
-                    newIntent.putExtra("aux", "principal");
-                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    this.getContext().startActivity(newIntent);
-                }
-
-
-            } else {
-
-                elemento_x = points.get(pointPos).getX();
-                elemento_y = points.get(pointPos).getY();
-
-                pointPos++;
-
-                //Dibujar el objeto
-                //TODO: cambiar acá para recorrer todas las figuras
-                //String figura = config.getFigura();
-                //String figura = "circle";
-                String figura = Ruta.getFigure(contador_ruta);
-                if (figura.contains("square"))
-                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
-                else if (figura.contains("circle"))
-                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
-                else if (figura.contains("triangle"))
-                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
-                else
-                    elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);
-
-                canvas.drawBitmap(elemento, elemento_x, elemento_y, null);
-
-                invalidate();
+            //Guardar ruta usuario en archivo
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(ruta);
+                oos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+            //Guardar ruta objeto en archivo
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(fosObj);
+                oos.writeObject(rutaObjeto);
+                oos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //guardar imagen
+            this.setDrawingCacheEnabled(true);
+            this.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+            Bitmap bitmap = this.getDrawingCache();
+            File file = new File(rootPathUser + idUsuario + "_image_" + todayString + ".png");
+            FileOutputStream ostream;
+
+            try {
+                file.createNewFile();
+                ostream = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+                ostream.flush();
+                ostream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this.getContext(), "Error when saving the image", Toast.LENGTH_SHORT).show();
+            }
+
+            // nueva activity
+            contador_ruta++;
+            if (contador_ruta != 0 && contador_ruta % chosen_ruta.length == 0) {
+                contador_ruta = 0;
+                Intent intent = new Intent(this.getContext(), Contador.class);
+                intent.putExtra("config", config);
+                intent.putExtra("idUsuario", idUsuario);
+                intent.putExtra("rootPathUser", rootPathUser);
+                //newIntent.putExtra("points", points);
+                intent.putExtra("contador_ruta", contador_ruta);
+                intent.putExtra("chosen_ruta", chosen_ruta);
+                intent.putExtra("contador_trials", contador_trials);
+                intent.putExtra("aux", "desaparece");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.getContext().startActivity(intent);
+            } else {
+                Intent intent = new Intent(this.getContext(), Contador.class);
+                intent.putExtra("config", config);
+                intent.putExtra("idUsuario", idUsuario);
+                intent.putExtra("rootPathUser", rootPathUser);
+                //newIntent.putExtra("points", points);
+                intent.putExtra("contador_ruta", contador_ruta);
+                intent.putExtra("chosen_ruta", chosen_ruta);
+                intent.putExtra("contador_trials", contador_trials);
+                intent.putExtra("aux", "principal");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.getContext().startActivity(intent);
+            }
+
+
+        } else {
+
+            elemento_x = points.get(pointPos).getX();
+            elemento_y = points.get(pointPos).getY();
+
+            pointPos++;
+
+            //Dibujar el objeto
+            String figura = Ruta.getFigure(chosen_ruta[contador_ruta]);
+            if (figura.contains("square"))
+                elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
+            else if (figura.contains("circle"))
+                elemento = BitmapFactory.decodeResource(getResources(), R.drawable.circulo_peque);
+            else if (figura.contains("triangle"))
+                elemento = BitmapFactory.decodeResource(getResources(), R.drawable.triangulo_peque);
+            else
+                elemento = BitmapFactory.decodeResource(getResources(), R.drawable.rombo_peque);
+
+            canvas.drawBitmap(elemento, elemento_x, elemento_y, null);
+
+            invalidate();
+        }
         }
     }
 

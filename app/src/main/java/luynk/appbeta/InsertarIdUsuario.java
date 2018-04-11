@@ -1,15 +1,20 @@
 package luynk.appbeta;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.content.res.Resources;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import model.Configuracion;
 
@@ -18,12 +23,9 @@ public class InsertarIdUsuario extends Activity {
 
     EditText idUsuario;
     Configuracion config;
-    double speed, percent, seconds, t_aux, yvalue;
-    float elemento_x=0, elemento_y=0;
-    boolean flag;
-    int entrenamiento, contador_entrenamientos, contador_ruta;
-
-    private ArrayList<Puntos> points = new ArrayList<>();
+    double seconds;
+    int entrenamiento, contador_entrenamientos, contador_ruta, contador_trials;
+    int[] chosen_ruta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,52 +37,17 @@ public class InsertarIdUsuario extends Activity {
 
         config = getIntent().getParcelableExtra("config");
 
-        seconds = Integer.parseInt(config.getSegundosVelocidad());// getIntent().getIntExtra("seconds", 0);
-        entrenamiento = Integer.parseInt(config.getIntentos());// getIntent().getIntExtra("entrenamiento", 0);
+        seconds = Integer.parseInt(config.getSegundosVelocidad());
+        entrenamiento = Integer.parseInt(config.getIntentos());
         contador_entrenamientos = 0;
         contador_ruta = 0;
+        chosen_ruta = Ruta.chooseRoutes();
+        System.out.println("----------------------------------------------------------");
+        System.out.println(chosen_ruta[0]+", "+chosen_ruta[1]+", "+chosen_ruta[2]);
+        System.out.println("----------------------------------------------------------");
+        contador_trials = 0; //Integer.parseInt(config.getTrialNumber());
 
-        /*percent = 100/seconds; //Percent of screen in 1 second
-        speed = percent/6000;
-        t_aux = 1 / (seconds*60);
-        int dim = (int) seconds * 60;
-        flag = false;
 
-        Double aux = getScreenWidth() * speed;
-
-        float x_dir = aux.floatValue();
-
-        //TODO: cambiar esto para que reccorra todas las rutas
-        //String ruta_aux = config.getRuta();
-        String ruta_aux = "route1";
-
-        //Calcular movimiento del objeto
-
-        for (int i=0; i < dim; i++){
-
-            elemento_x = elemento_x + x_dir;
-
-            if (ruta_aux.contains("route1")){
-                yvalue = Math.sin(2 * Math.PI * (0.99 / 2 * (t_aux * t_aux)));
-                elemento_y = (float) (getScreenHeight() / 2 + (-1 * yvalue * getScreenHeight() * 0.4));
-            } else if (ruta_aux.contains("route2")){
-                yvalue = Math.sin(2 * Math.PI * (0.99 / 2 * (t_aux * t_aux)));
-                elemento_y = (float) (getScreenHeight() / 2 + (yvalue * getScreenHeight() * 0.4));
-            } else if (ruta_aux.contains("route3")){
-                yvalue = Math.sin(2 * Math.PI * (1.5 / 2 * (t_aux * t_aux)));
-                elemento_y = (float) (getScreenHeight() / 2 + (-1 * yvalue * getScreenHeight() * 0.4));
-            } else{
-                yvalue = Math.sin(2 * Math.PI * (1.5 / 2 * (t_aux * t_aux)));
-                elemento_y = (float) (getScreenHeight() / 2 + (yvalue * getScreenHeight() * 0.4));
-            }
-
-            t_aux = t_aux + (1 / (seconds * 60));
-            points.add(new Puntos(elemento_x, elemento_y));
-
-            if(i == dim-1){
-                flag = true;
-            }
-        }*/
 
         Button continuar = (Button) findViewById(R.id.btIdUsuario);
         continuar.setOnClickListener(new View.OnClickListener() {
@@ -90,27 +57,37 @@ public class InsertarIdUsuario extends Activity {
                     Toast.makeText(view.getContext(), "You must insert an ID.", Toast.LENGTH_SHORT).show();
                 }else {
                     String id = idUsuario.getText().toString();
-                    //if(flag){
-                        Intent intent = new Intent(view.getContext(), ExplicacionEntrenamiento.class);
-                        intent.putExtra("config",config);
-                        intent.putExtra("idUsuario", id);
-                        //intent.putExtra("points", points);
-                        //intent.putExtra("entrenamiento", entrenamiento);
-                        intent.putExtra("contador_entrenamientos", contador_entrenamientos);
-                        intent.putExtra("contador_ruta", contador_ruta);
-                        view.getContext().startActivity(intent);
-                    //}
+
+                    Date todayDate = Calendar.getInstance().getTime();
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+                    String todayString = formatter.format(todayDate);
+
+                    //Crear carpeta para archivos la primera ves en el dispositivo
+                    String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DataCaptureApp/";
+
+                    File root = new File(rootPath);
+                    if (!root.exists()) {
+                        root.mkdirs();
+                    }
+
+                    //crear carpeta de usuario
+                    String rootPathUser = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DataCaptureApp/"+id+"_"+todayString+"/";
+                    File rootAux = new File(rootPathUser);
+                    if (!rootAux.exists()) {
+                        rootAux.mkdirs();
+                    }
+
+                    Intent intent = new Intent(view.getContext(), ExplicacionEntrenamiento.class);
+                    intent.putExtra("config",config);
+                    intent.putExtra("idUsuario", id);
+                    intent.putExtra("contador_entrenamientos", contador_entrenamientos);
+                    intent.putExtra("contador_ruta", contador_ruta);
+                    intent.putExtra("chosen_ruta", chosen_ruta);
+                    intent.putExtra("rootPathUser", rootPathUser);
+                    intent.putExtra("contador_trials", contador_trials);
+                    view.getContext().startActivity(intent);
                 }
             }
         });
     }
-
-    public static int getScreenWidth() {
-        return Resources.getSystem().getDisplayMetrics().widthPixels;
-    }
-
-    public static int getScreenHeight() {
-        return Resources.getSystem().getDisplayMetrics().heightPixels;
-    }
-
 }

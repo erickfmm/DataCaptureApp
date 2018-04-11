@@ -40,10 +40,11 @@ public class Activity_Entrenamiento_Layout extends View {
 
     Bitmap elemento;
     float elemento_x=0, elemento_y=0;
-    int elementoHeight, elementoWidth;
+    int elementoHeight, elementoWidth, contador_trials;
     String corX="NaN", corY="NaN";
     boolean flag;
     double speed, percent, seconds, t_aux;
+    int[] chosen_ruta;
 
     private Paint mPaint;
     private Path mPath;
@@ -107,31 +108,19 @@ public class Activity_Entrenamiento_Layout extends View {
         entrenamientos = ((Entrenamiento)getContext()).getEntrenamientos();
         contador_entrenamientos = ((Entrenamiento)getContext()).getContador_entrenamientos();
         contador_ruta = ((Entrenamiento)getContext()).getContador_ruta();
+        chosen_ruta = ((Entrenamiento)getContext()).getChosen_ruta();
+        contador_trials = ((Entrenamiento)getContext()).getContador_trials();
+        rootPathUser = ((Entrenamiento)getContext()).getRootPathUser();
 
         System.out.println("Act_Entr-contador entrenamientos: "+contador_entrenamientos);
         System.out.println("Act_Entr-contador ruta: "+contador_ruta);
-        points = Ruta.getRuta(contador_ruta, Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
+        points = Ruta.getRuta(chosen_ruta[contador_ruta], Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
 
         Date todayDate = Calendar.getInstance().getTime();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
         todayString = formatter.format(todayDate);
 
-        //Crear carpeta para archivos la primera ves en el dispositivo
-        String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DataCaptureApp/";
 
-        File root = new File(rootPath);
-        if (!root.exists()) {
-            root.mkdirs();
-        }
-
-        //crear carpeta de usuario
-        rootPathUser = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DataCaptureApp/"+idUsuario+"_"+todayString+"/";
-        File rootAux = new File(rootPathUser);
-        if (!rootAux.exists()) {
-            rootAux.mkdirs();
-        }else {
-            rootPathUser = ((Entrenamiento)getContext()).getRootPathUser();
-        }
 
         //Crear archivo para rutas de entrenamiento
         File f = new File(rootPathUser + idUsuario+"_coord_training_"+todayString+".txt");
@@ -215,34 +204,34 @@ public class Activity_Entrenamiento_Layout extends View {
 
                 // nueva activity
                 contador_ruta++;
-                if(contador_ruta!=0 && contador_ruta %4 == 0){
+                if(contador_ruta!=0 && contador_ruta %chosen_ruta.length == 0){
                     contador_entrenamientos++;
                     contador_ruta = 0;
                 }
 
                 if (contador_entrenamientos == entrenamientos){
                     contador_ruta = 0;
-                    Intent newIntent = new Intent(this.getContext(), ExplicacionPrincipal.class);
-                    newIntent.putExtra("config",config);
-                    newIntent.putExtra("idUsuario", idUsuario);
-                    newIntent.putExtra("rootPathUser", rootPathUser);
-                    //newIntent.putExtra("points", points);
-                    newIntent.putExtra("entrenamiento", entrenamientos);
-                    newIntent.putExtra("contador_entrenamientos", contador_entrenamientos);
-                    newIntent.putExtra("contador_ruta", contador_ruta);
-                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    this.getContext().startActivity(newIntent);
+                    Intent intent = new Intent(this.getContext(), ExplicacionPrincipal.class);
+                    intent.putExtra("config",config);
+                    intent.putExtra("idUsuario", idUsuario);
+                    intent.putExtra("rootPathUser", rootPathUser);
+                    intent.putExtra("entrenamiento", entrenamientos);
+                    intent.putExtra("contador_entrenamientos", contador_entrenamientos);
+                    intent.putExtra("contador_ruta", contador_ruta);
+                    intent.putExtra("chosen_ruta", chosen_ruta);
+                    intent.putExtra("contador_trials", contador_trials);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.getContext().startActivity(intent);
                 }else {
-                    //Intent intent = new Intent(this.getContext(), Entrenamiento.class);
                     Intent intent = new Intent(this.getContext(), Contador.class);
                     intent.putExtra("config",config);
                     intent.putExtra("idUsuario", idUsuario);
                     intent.putExtra("rootPathUser", rootPathUser);
-                    //intent.putExtra("points", points);
                     intent.putExtra("entrenamiento", entrenamientos);
                     intent.putExtra("aux", "entrenamiento");
                     intent.putExtra("contador_entrenamientos", contador_entrenamientos);
                     intent.putExtra("contador_ruta", contador_ruta);
+                    intent.putExtra("chosen_ruta", chosen_ruta);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.getContext().startActivity(intent);
                 }
@@ -251,15 +240,10 @@ public class Activity_Entrenamiento_Layout extends View {
                 elemento_x = points.get(pointPos).getX();
                 elemento_y = points.get(pointPos).getY();
 
-                //System.out.println("el_x: "+elemento_x+"\tel_y: "+elemento_y);
-
                 pointPos++;
 
                 //Dibujar el objeto
-                //TODO: cambiar acá para recorrer todas las figuras
-                //String figura = config.getFigura();
-                //String figura = "circle";
-                String figura = Ruta.getFigure(contador_ruta);
+                String figura = Ruta.getFigure(chosen_ruta[contador_ruta]);
                 if (figura.contains("square"))
                     elemento = BitmapFactory.decodeResource(getResources(), R.drawable.cuadrado_peque);
                 else if (figura.contains("circle"))

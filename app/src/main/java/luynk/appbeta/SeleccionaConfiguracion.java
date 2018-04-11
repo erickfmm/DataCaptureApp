@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -137,7 +138,7 @@ public class SeleccionaConfiguracion extends Activity{
         recycler.setHasFixedSize(true);
 
         //Usar administrador para LinearLayout
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2); // new LinearLayoutManager(this);
         recycler.setLayoutManager(layoutManager);
 
         //Crear nuevo adaptador

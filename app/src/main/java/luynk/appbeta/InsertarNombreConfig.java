@@ -36,7 +36,7 @@ public class InsertarNombreConfig extends Activity{
                 }else {
                     String nombre = nombreConfig.getText().toString();
 
-                    config = new Configuracion(null, nombre, null, null, null, null);
+                    config = new Configuracion(null, nombre, null, null, null, null, null);
 
                     //Intent intent = new Intent(view.getContext(), SeleccionaFigura.class);
                     Intent intent = new Intent(view.getContext(), SeleccionaDondeDesaparece.class);

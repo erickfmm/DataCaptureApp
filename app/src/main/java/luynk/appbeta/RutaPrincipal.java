@@ -15,10 +15,9 @@ public class RutaPrincipal extends Activity {
     Configuracion config;
     String idUsuario, rootPathUser;
 
-
-
-    //private ArrayList<Puntos> points = new ArrayList<>();
     int contador_ruta;
+    int contador_trials;
+    int[] chosen_ruta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +25,10 @@ public class RutaPrincipal extends Activity {
 
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
-        //points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
         rootPathUser = getIntent().getStringExtra("rootPathUser");
         contador_ruta = getIntent().getIntExtra("contador_ruta", 0);
+        chosen_ruta = getIntent().getIntArrayExtra("chosen_ruta");
+        contador_trials = getIntent().getIntExtra("contador_trials", 0);
 
         try {
             rutaUno_layoutView = new Activity_RutaPrincipal_Layout(this);
@@ -52,10 +52,16 @@ public class RutaPrincipal extends Activity {
         return this.config;
     }
 
-    //public ArrayList<Puntos> getPoints() { return this.points; }
-
     public int getContador_ruta() {
         return contador_ruta;
+    }
+
+    public int[] getChosen_ruta() {
+        return chosen_ruta;
+    }
+
+    public int getContador_trials() {
+        return contador_trials;
     }
 
     @Override

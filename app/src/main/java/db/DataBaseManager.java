@@ -20,9 +20,9 @@ public abstract class DataBaseManager {
     }
 
     abstract public void insertar(String id, String nombre, String intentos, String segundosVelocidad,
-                                  String desapareceInicio, String desapareceFinal);
+                                  String desapareceInicio, String desapareceFinal, String trialNumber);
     abstract public void actualizar(String id, String nombre, String intentos, String segundosVelocidad,
-                                    String desapareceInicio, String desapareceFinal);
+                                    String desapareceInicio, String desapareceFinal, String trialNumber);
 
     abstract public void eliminar(String id);
     abstract public void eliminarTodo();

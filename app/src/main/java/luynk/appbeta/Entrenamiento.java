@@ -13,8 +13,11 @@ public class Entrenamiento extends Activity {
     Activity_Entrenamiento_Layout entrenamiento_layout;
     Configuracion config;
     String idUsuario, rootPathUser;
-    //private ArrayList<Puntos> points = new ArrayList<>();
-    int entrenamientos, contador_entrenamientos, contador_ruta;
+    int entrenamientos;
+    int contador_entrenamientos;
+    int contador_ruta;
+    int[] chosen_ruta;
+    int contador_trials;
 
 
     @Override
@@ -23,14 +26,16 @@ public class Entrenamiento extends Activity {
 
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
-        //points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
-        entrenamientos = Integer.parseInt(config.getIntentos());//getIntent().getIntExtra("entrenamiento", 0);
+        entrenamientos = Integer.parseInt(config.getIntentos());
         contador_entrenamientos = getIntent().getIntExtra("contador_entrenamientos", 0);
         contador_ruta = getIntent().getIntExtra("contador_ruta", 0);
+        chosen_ruta = getIntent().getIntArrayExtra("chosen_ruta");
+        contador_trials = getIntent().getIntExtra("contador_trials", 0);
+        rootPathUser = getIntent().getStringExtra("rootPathUser");
 
-        if (contador_entrenamientos>0){
-            rootPathUser = getIntent().getStringExtra("rootPathUser");
-        }
+        /*if (contador_entrenamientos>0){
+
+        }*/
 
         try {
             entrenamiento_layout = new Activity_Entrenamiento_Layout(this);
@@ -56,14 +61,20 @@ public class Entrenamiento extends Activity {
     {
         return this.config;
     }
-
-    //public ArrayList<Puntos> getPoints() { return this.points; }
     
     public int getContador_ruta(){return this.contador_ruta;}
 
     public int getEntrenamientos() { return this.entrenamientos; }
 
     public int getContador_entrenamientos() { return this.contador_entrenamientos; }
+
+    public int[] getChosen_ruta() {
+        return chosen_ruta;
+    }
+
+    public int getContador_trials() {
+        return contador_trials;
+    }
 
     @Override
     public void onBackPressed() {

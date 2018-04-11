@@ -20,6 +20,7 @@ public class DataBaseManagerConfig extends DataBaseManager{
     private static final String CN_SEGUNDOSVELOCIDAD = "velocidad";
     private static final String CN_DESAPARECEINICIO = "desapareceinicio";
     private static final String CN_DESAPARECEFINAL = "desaparecefinal";
+    private static final String CN_TRIALNUMBER = "trialNumber";
 
     public static final String CREATE_TABLE = "create table " + NOMBRE_TABLA + " ("
             + CN_ID + " integer PRIMARY KEY AUTOINCREMENT, "
@@ -27,7 +28,8 @@ public class DataBaseManagerConfig extends DataBaseManager{
             + CN_INTENTOS + " integer NOT NULL, "
             + CN_SEGUNDOSVELOCIDAD + " integer NOT NULL, "
             + CN_DESAPARECEINICIO + " integer NOT NULL,"
-            + CN_DESAPARECEFINAL + " integer NOT NULL"
+            + CN_DESAPARECEFINAL + " integer NOT NULL,"
+            + CN_TRIALNUMBER + " integer NOT NULL"
             + ");";
 
     public DataBaseManagerConfig(Context context)
@@ -43,7 +45,7 @@ public class DataBaseManagerConfig extends DataBaseManager{
     }
 
     private ContentValues generarContentValues(String id, String nombre, String intentos, String segundosVelocidad,
-                                               String desapareceInicio, String desapareceFinal)
+                                               String desapareceInicio, String desapareceFinal, String trialNumber)
     {
         ContentValues valores = new ContentValues();
         valores.put(CN_ID, id);
@@ -52,6 +54,7 @@ public class DataBaseManagerConfig extends DataBaseManager{
         valores.put(CN_SEGUNDOSVELOCIDAD, segundosVelocidad);
         valores.put(CN_DESAPARECEINICIO, desapareceInicio);
         valores.put(CN_DESAPARECEFINAL, desapareceFinal);
+        valores.put(CN_TRIALNUMBER, trialNumber);
 
         return valores;
     }
@@ -59,14 +62,14 @@ public class DataBaseManagerConfig extends DataBaseManager{
 
     @Override
     public void insertar(String id, String nombre, String intentos, String segundosVelocidad,
-                         String desapareceInicio, String desapareceFinal)
+                         String desapareceInicio, String desapareceFinal, String trialNumber)
     {
-        super.getDb().insert(NOMBRE_TABLA,null, generarContentValues(id,nombre,intentos,segundosVelocidad,desapareceInicio,desapareceFinal));
+        super.getDb().insert(NOMBRE_TABLA,null, generarContentValues(id,nombre,intentos,segundosVelocidad,desapareceInicio,desapareceFinal, trialNumber));
     }
 
     @Override
     public void actualizar(String id, String nombre, String intentos, String segundosVelocidad,
-                           String desapareceInicio, String desapareceFinal)
+                           String desapareceInicio, String desapareceFinal, String trialNumber)
     {
         ContentValues valores = new ContentValues();
         valores.put(CN_ID, id);
@@ -75,6 +78,7 @@ public class DataBaseManagerConfig extends DataBaseManager{
         valores.put(CN_SEGUNDOSVELOCIDAD, segundosVelocidad);
         valores.put(CN_DESAPARECEINICIO, desapareceInicio);
         valores.put(CN_DESAPARECEFINAL, desapareceFinal);
+        valores.put(CN_TRIALNUMBER, trialNumber);
 
         String [] args = new String[]{id};
 
@@ -97,7 +101,7 @@ public class DataBaseManagerConfig extends DataBaseManager{
     @Override
     public Cursor cargarCursor()
     {
-        String [] columnas = new String[]{CN_ID, CN_NOMBRE, CN_INTENTOS, CN_SEGUNDOSVELOCIDAD, CN_DESAPARECEINICIO, CN_DESAPARECEFINAL};
+        String [] columnas = new String[]{CN_ID, CN_NOMBRE, CN_INTENTOS, CN_SEGUNDOSVELOCIDAD, CN_DESAPARECEINICIO, CN_DESAPARECEFINAL, CN_TRIALNUMBER};
         return super.getDb().query(NOMBRE_TABLA, columnas, null, null, null, null, null);
     }
 
@@ -129,6 +133,7 @@ public class DataBaseManagerConfig extends DataBaseManager{
             configuracion.setSegundosVelocidad(Integer.parseInt(cursor.getString(3)));
             configuracion.setDesapareceInicio(Integer.parseInt(cursor.getString(4)));
             configuracion.setDesapareceFinal(Integer.parseInt(cursor.getString(5)));
+            configuracion.setTrialNumber(Integer.parseInt(cursor.getString(6)));
 
             list.add(configuracion);
         }

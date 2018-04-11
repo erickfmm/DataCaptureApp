@@ -15,7 +15,9 @@ public class RutaPrincipalDesaparece extends Activity {
     Configuracion config;
     String idUsuario, rootPathUser;
     int contador_ruta;
-    //private ArrayList<Puntos> points = new ArrayList<>();
+    int contador_trials;
+    int totalTrials;
+    int[] chosen_ruta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +25,11 @@ public class RutaPrincipalDesaparece extends Activity {
 
         config = getIntent().getParcelableExtra("config");
         idUsuario = getIntent().getStringExtra("idUsuario");
-        //points = (ArrayList<Puntos>) getIntent().getSerializableExtra("points");
         contador_ruta = getIntent().getIntExtra("contador_ruta", 0);
         rootPathUser = getIntent().getStringExtra("rootPathUser");
+        chosen_ruta = getIntent().getIntArrayExtra("chosen_ruta");
+        contador_trials = getIntent().getIntExtra("contador_trials", 0);
+        totalTrials = Integer.parseInt(config.getTrialNumber());
 
         try {
             rutaUnoDesaparece_layoutView = new Activity_RutaPrincipalDesaparece_Layout(this);
@@ -55,8 +59,17 @@ public class RutaPrincipalDesaparece extends Activity {
         return contador_ruta;
     }
 
+    public int getContador_trials() {
+        return contador_trials;
+    }
 
-    //public ArrayList<Puntos> getPoints() { return this.points; }
+    public int getTotalTrials() {
+        return totalTrials;
+    }
+
+    public int[] getChosen_ruta() {
+        return chosen_ruta;
+    }
 
     @Override
     public void onBackPressed() {

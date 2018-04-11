@@ -36,7 +36,7 @@ public class SeleccionaEntrenamientoVelocidad extends Activity{
         seconds.setMaxValue(1000);
 
         //Gets whether the selector wheel wraps when reaching the min/max value.
-        entrenamientos.setWrapSelectorWheel(true);
+        entrenamientos.setWrapSelectorWheel(false);
         seconds.setWrapSelectorWheel(false);
 
         managerConfig = new DataBaseManagerConfig(this);
@@ -50,8 +50,10 @@ public class SeleccionaEntrenamientoVelocidad extends Activity{
                     //int entrenamiento = entrenamientos.getValue();
                     config.setSegundosVelocidad(seconds.getValue());
                     config.setIntentos(entrenamientos.getValue());
+                    //TODO: hacer ventana trial number
+                    config.setTrialNumber(2);
                     managerConfig.insertar(null, config.getNombre(), config.getIntentos(),
-                            config.getSegundosVelocidad(), config.getDesapareceInicio(), config.getDesapareceFinal());
+                            config.getSegundosVelocidad(), config.getDesapareceInicio(), config.getDesapareceFinal(), config.getTrialNumber());
                     //Intent intent = new Intent(view.getContext(), InsertarIdUsuario.class);
                 Intent intent = new Intent(view.getContext(), SeleccionaConfiguracion.class);
                 //intent.putExtra("config",config);
