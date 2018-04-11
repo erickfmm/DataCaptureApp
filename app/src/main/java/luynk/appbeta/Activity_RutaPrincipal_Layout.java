@@ -30,14 +30,14 @@ import model.Configuracion;
 public class Activity_RutaPrincipal_Layout extends View {
 
     //Arrays para guardar las rutas del usuario y del objeto
-    private ArrayList<Posicion> ruta = new ArrayList<>();
-    private ArrayList<Posicion> rutaObjeto = new ArrayList<>();
+    private ArrayList<Puntos> ruta = new ArrayList<>();
+    private ArrayList<Puntos> rutaObjeto = new ArrayList<>();
     private ArrayList<Puntos> points = new ArrayList<>();
 
     Bitmap elemento;
     float elemento_x=0, elemento_y=0;
     int elementoHeight, elementoWidth, contador_ruta, contador_trials;
-    String corX="NaN", corY="NaN";
+    float corX=Float.NaN, corY=Float.NaN;
     boolean flag;
     double speed, percent, seconds, t_aux;
 
@@ -61,8 +61,8 @@ public class Activity_RutaPrincipal_Layout extends View {
     {
         @Override
         public void run() {
-            ruta.add(new Posicion(corX, corY));
-            rutaObjeto.add(new Posicion(String.valueOf(elemento_x), String.valueOf(elemento_y)));
+            ruta.add(new Puntos(corX, corY));
+            rutaObjeto.add(new Puntos(elemento_x, elemento_y));
             mHandler.postDelayed(mHandlerTask, interval);
         }
     };
@@ -114,7 +114,7 @@ public class Activity_RutaPrincipal_Layout extends View {
         todayString = formatter.format(todayDate);
 
         //Crear archivo para ruta de usuario
-        File f = new File(rootPathUser + idUsuario + "_coordUser_"+todayString+".txt");
+        File f = new File(rootPathUser + idUsuario + "_coordUser_"+contador_trials+"_"+chosen_ruta[contador_ruta]+"_"+todayString+".txt");
         if (f.exists()) {
             f.delete();
         }
@@ -128,7 +128,7 @@ public class Activity_RutaPrincipal_Layout extends View {
         fos = new FileOutputStream(f);
 
         //Crear archivo para ruta de objeto
-        File f2 = new File(rootPathUser + idUsuario + "_coordFigure_"+todayString+".txt");
+        File f2 = new File(rootPathUser + idUsuario + "_coordFigure_"+contador_trials+"_"+chosen_ruta[contador_ruta]+"_"+todayString+".txt");
         if (f2.exists()) {
             f2.delete();
         }
@@ -168,7 +168,8 @@ public class Activity_RutaPrincipal_Layout extends View {
             //Guardar ruta usuario en archivo
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(ruta);
+                oos.writeChars(Puntos.toCSV(ruta));
+                //oos.writeObject(ruta);
                 oos.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -177,7 +178,8 @@ public class Activity_RutaPrincipal_Layout extends View {
             //Guardar ruta objeto en archivo
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(fosObj);
-                oos.writeObject(rutaObjeto);
+                oos.writeChars(Puntos.toCSV(rutaObjeto));
+                //oos.writeObject(rutaObjeto);
                 oos.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -187,7 +189,7 @@ public class Activity_RutaPrincipal_Layout extends View {
             this.setDrawingCacheEnabled(true);
             this.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
             Bitmap bitmap = this.getDrawingCache();
-            File file = new File(rootPathUser + idUsuario + "_image_" + todayString + ".png");
+            File file = new File(rootPathUser + idUsuario + "_image_" +contador_trials+"_"+chosen_ruta[contador_ruta]+"_"+ todayString + ".png");
             FileOutputStream ostream;
 
             try {
@@ -264,21 +266,21 @@ public class Activity_RutaPrincipal_Layout extends View {
         switch (event.getAction()){
 
             case MotionEvent.ACTION_DOWN:
-                corX = String.valueOf(Math.round(event.getX()));
-                corY = String.valueOf(Math.round(event.getY()));
+                corX = event.getX();
+                corY = event.getY();
                 mPath.moveTo(event.getX(), event.getY());
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                corX = String.valueOf(Math.round(event.getX()));
-                corY = String.valueOf(Math.round(event.getY()));
+                corX = event.getX();
+                corY = event.getY();
                 mPath.lineTo(event.getX(), event.getY());
                 invalidate();
                 break;
 
             case MotionEvent.ACTION_UP:
-                corX = "NaN";
-                corY = "NaN";
+                corX = Float.NaN;
+                corY = Float.NaN;
                 break;
         }
 

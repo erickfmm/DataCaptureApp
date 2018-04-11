@@ -15,7 +15,7 @@ public class Ruta {
 
         float x_dir = aux.floatValue();
 
-        System.out.println("t_aux: "+t_aux+"\tseconds: "+seconds+"\tmit_aux: "+(1.0 / (seconds*60.0)));
+        System.out.println("t_aux: "+t_aux+"\ttrials: "+seconds+"\tmit_aux: "+(1.0 / (seconds*60.0)));
         System.out.println("width: "+screenWidth+"\theight: "+screenHeight);
         System.out.println("ruta: "+ruta);
         ruta = ruta % 4;

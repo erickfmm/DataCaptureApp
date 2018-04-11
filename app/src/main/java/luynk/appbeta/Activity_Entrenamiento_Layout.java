@@ -34,14 +34,14 @@ import model.Configuracion;
 public class Activity_Entrenamiento_Layout extends View {
 
     //Arrays para guardar las rutas del usuario
-    private ArrayList<Posicion> ruta = new ArrayList<>();
-    private ArrayList<Posicion> rutaObjeto = new ArrayList<>();
+    private ArrayList<Puntos> ruta = new ArrayList<>();
+    private ArrayList<Puntos> rutaObjeto = new ArrayList<>();
     private ArrayList<Puntos> points;// = new ArrayList<>();
 
     Bitmap elemento;
     float elemento_x=0, elemento_y=0;
     int elementoHeight, elementoWidth, contador_trials;
-    String corX="NaN", corY="NaN";
+    float corX=Float.NaN, corY=Float.NaN;
     boolean flag;
     double speed, percent, seconds, t_aux;
     int[] chosen_ruta;
@@ -64,8 +64,8 @@ public class Activity_Entrenamiento_Layout extends View {
     {
         @Override
         public void run() {
-            ruta.add(new Posicion(corX, corY));
-            rutaObjeto.add(new Posicion(String.valueOf(elemento_x), String.valueOf(elemento_y)));
+            ruta.add(new Puntos(corX, corY));
+            rutaObjeto.add(new Puntos(elemento_x, elemento_y));
             mHandler.postDelayed(mHandlerTask, interval);
         }
     };
@@ -123,7 +123,7 @@ public class Activity_Entrenamiento_Layout extends View {
 
 
         //Crear archivo para rutas de entrenamiento
-        File f = new File(rootPathUser + idUsuario+"_coord_training_"+todayString+".txt");
+        File f = new File(rootPathUser + idUsuario+"_coord_training_"+contador_entrenamientos+"_"+chosen_ruta[contador_ruta]+"_"+todayString+".txt");
         if (!f.exists()) {
             try {
                 f.createNewFile();
@@ -164,15 +164,14 @@ public class Activity_Entrenamiento_Layout extends View {
                 double suma=0;
 
                 for (int i=0; i<ruta.size(); i++){
-                    String aux = ruta.get(i).getY();
-                    String aux2 = rutaObjeto.get(i).getY();
-                    if (aux.contains("NaN")){
+                    float aux = ruta.get(i).getY();
+                    float aux2 = rutaObjeto.get(i).getY();
+                    if (aux == Float.NaN){
                         yuser = 0;
                     }else {
-                        String[] arrayString = aux.split(":");
-                        yuser = Float.parseFloat(arrayString[1]);
+                        yuser = aux;
                     }
-                    yobj = Float.parseFloat(aux2.substring(2,7));
+                    yobj = aux2;
 
                     //Log.d("aux", String.valueOf(yuser));
                     //Log.d("aux", aux2.substring(2,7));
@@ -188,13 +187,15 @@ public class Activity_Entrenamiento_Layout extends View {
                 try {
                     if (contador_entrenamientos == 1){
                         ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(ruta);
-                        oos.writeBytes("Fin entrenamiento "+contador_entrenamientos);
+                        oos.writeChars(Puntos.toCSV(ruta));
+                        //oos.writeObject(ruta);
+                        //oos.writeBytes("Fin entrenamiento "+contador_entrenamientos);
                         oos.close();
                     }else{
                         AppendingObjectOutputStream oos = new AppendingObjectOutputStream(fos);
-                        oos.writeObject(ruta);
-                        oos.writeBytes("Fin entrenamiento "+contador_entrenamientos);
+                        oos.writeChars(Puntos.toCSV(ruta));
+                        //oos.writeObject(ruta);
+                        //oos.writeBytes("Fin entrenamiento "+contador_entrenamientos);
                         oos.close();
                     }
 
@@ -268,21 +269,21 @@ public class Activity_Entrenamiento_Layout extends View {
         switch (event.getAction()){
 
             case MotionEvent.ACTION_DOWN:
-                corX = String.valueOf(Math.round(event.getX()));
-                corY = String.valueOf(Math.round(event.getY()));
+                corX = event.getX();
+                corY = event.getY();
                 mPath.moveTo(event.getX(), event.getY());
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                corX = String.valueOf(Math.round(event.getX()));
-                corY = String.valueOf(Math.round(event.getY()));
+                corX = event.getX();
+                corY =event.getY();
                 mPath.lineTo(event.getX(), event.getY());
                 invalidate();
                 break;
 
             case MotionEvent.ACTION_UP:
-                corX = "NaN";
-                corY = "NaN";
+                corX = Float.NaN;
+                corY = Float.NaN;
                 break;
         }
 

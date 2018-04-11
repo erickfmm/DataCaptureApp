@@ -28,14 +28,14 @@ import model.Configuracion;
 
 
 public class Activity_RutaPrincipalDesaparece_Layout extends View {
-    private ArrayList<Posicion> ruta = new ArrayList<>();
-    private ArrayList<Puntos> points = new ArrayList<>();
+    private ArrayList<Puntos> ruta = new ArrayList<>();
+    private ArrayList<Puntos> points;// = new ArrayList<>();
 
     Bitmap elemento;
     float elemento_x, elemento_y;
     int elementoHeight, elementoWidth, contador_ruta, contador_trials, totalTrials;
     boolean flag;
-    String corX="NaN", corY="NaN";
+    float corX=Float.NaN, corY=Float.NaN;
 
     private Paint mPaint;
     private Path mPath;
@@ -56,7 +56,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
     {
         @Override
         public void run() {
-            ruta.add(new Posicion(corX, corY));
+            ruta.add(new Puntos(corX, corY));
             mHandler.postDelayed(mHandlerTask, interval);
         }
     };
@@ -104,7 +104,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
         todayString = formatter.format(todayDate);
 
-        File f = new File(rootPathUser + idUsuario + "_coordDisappear_"+todayString+".txt");
+        File f = new File(rootPathUser + idUsuario + "_coordDisappear_"+contador_trials+"_"+chosen_ruta[contador_ruta]+"_"+todayString+".txt");
         if (f.exists()) {
             f.delete();
         }
@@ -144,7 +144,8 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
                 //Guardar ruta de usuario en archivo
                 try {
                     ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(ruta);
+                    oos.writeChars(Puntos.toCSV(ruta));
+                    //oos.writeObject(ruta);
                     oos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -154,7 +155,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
                 this.setDrawingCacheEnabled(true);
                 this.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 Bitmap bitmap = this.getDrawingCache();
-                File file = new File(rootPathUser+ idUsuario +"_imageDisappear_"+todayString+".png");
+                File file = new File(rootPathUser+ idUsuario +"_imageDisappear_"+contador_trials+"_"+chosen_ruta[contador_ruta]+"_"+todayString+".png");
                 FileOutputStream ostream;
                 try {
                     file.createNewFile();
@@ -255,21 +256,21 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
         switch (event.getAction()){
 
             case MotionEvent.ACTION_DOWN:
-                corX = String.valueOf(Math.round(event.getX()));
-                corY = String.valueOf(Math.round(event.getY()));
+                corX = event.getX();
+                corY = event.getY();
                 mPath.moveTo(event.getX(), event.getY());
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                corX = String.valueOf(Math.round(event.getX()));
-                corY = String.valueOf(Math.round(event.getY()));
+                corX = event.getX();
+                corY = event.getY();
                 mPath.lineTo(event.getX(), event.getY());
                 invalidate();
                 break;
 
             case MotionEvent.ACTION_UP:
-                corX = "NaN";
-                corY = "NaN";
+                corX = Float.NaN;
+                corY = Float.NaN;
                 break;
         }
 

@@ -12,6 +12,9 @@ import android.widget.Toast;
 import android.content.res.Resources;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +29,7 @@ public class InsertarIdUsuario extends Activity {
     double seconds;
     int entrenamiento, contador_entrenamientos, contador_ruta, contador_trials;
     int[] chosen_ruta;
+    String configurationStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,14 @@ public class InsertarIdUsuario extends Activity {
         System.out.println("----------------------------------------------------------");
         contador_trials = 0; //Integer.parseInt(config.getTrialNumber());
 
+        configurationStr = "Route: "+chosen_ruta[0]+", "+chosen_ruta[1]+", "+chosen_ruta[2];
+        configurationStr += "\nConfig:\nTrial Number: "+config.getTrialNumber()
+                +"\nId: "+config.getId()
+                +"\nName: "+config.getNombre()
+                +"\nDisappear at: "+config.getDesapareceInicio()
+                +"\nDisappear ends: "+config.getDesapareceFinal()
+                +"\nSeconds speed: "+config.getSegundosVelocidad()
+                +"\nTrain number"+config.getIntentos();
 
 
         Button continuar = (Button) findViewById(R.id.btIdUsuario);
@@ -75,6 +87,27 @@ public class InsertarIdUsuario extends Activity {
                     File rootAux = new File(rootPathUser);
                     if (!rootAux.exists()) {
                         rootAux.mkdirs();
+                    }
+
+                    //Crear archivo para rutas de entrenamiento
+                    File f = new File(rootPathUser + id+"_configs_params_"+todayString+".txt");
+                    if (!f.exists()) {
+                        try {
+                            f.createNewFile();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                    try{
+                        FileOutputStream fos = new FileOutputStream(f);
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+                        oos.writeChars(configurationStr);
+                        oos.close();
+                    }catch(Exception e){
+
                     }
 
                     Intent intent = new Intent(view.getContext(), ExplicacionEntrenamiento.class);

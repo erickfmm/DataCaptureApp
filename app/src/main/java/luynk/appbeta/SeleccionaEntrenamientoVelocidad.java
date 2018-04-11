@@ -7,58 +7,45 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
-import db.DataBaseManagerConfig;
 import model.Configuracion;
 
 public class SeleccionaEntrenamientoVelocidad extends Activity{
 
     Configuracion config;
-    NumberPicker entrenamientos, seconds;
-    DataBaseManagerConfig managerConfig;
+    NumberPicker entrenamientos, trials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selecciona_velocidad);
+        setContentView(R.layout.activity_selecciona_intentos);
 
         config = getIntent().getParcelableExtra("config");
 
         entrenamientos = (NumberPicker) findViewById(R.id.numEntrenamiento);
 
-        seconds = (NumberPicker) findViewById(R.id.numVelocidad);
+        trials = (NumberPicker) findViewById(R.id.numTrials);
 
         //Specify the maximum value/number of NumberPicker
         entrenamientos.setMinValue(1);
-        seconds.setMinValue(1);
+        trials.setMinValue(1);
         //Specify the maximum value/number of NumberPicker
         entrenamientos.setMaxValue(1000);
-        seconds.setMaxValue(1000);
+        trials.setMaxValue(1000);
 
         //Gets whether the selector wheel wraps when reaching the min/max value.
         entrenamientos.setWrapSelectorWheel(false);
-        seconds.setWrapSelectorWheel(false);
-
-        managerConfig = new DataBaseManagerConfig(this);
+        trials.setWrapSelectorWheel(false);
 
         Button continuar = (Button) findViewById(R.id.btnEntrenamientoContinuar);
 
         continuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    //int speed = seconds.getValue();
-                    //int entrenamiento = entrenamientos.getValue();
-                    config.setSegundosVelocidad(seconds.getValue());
                     config.setIntentos(entrenamientos.getValue());
-                    //TODO: hacer ventana trial number
-                    config.setTrialNumber(2);
-                    managerConfig.insertar(null, config.getNombre(), config.getIntentos(),
-                            config.getSegundosVelocidad(), config.getDesapareceInicio(), config.getDesapareceFinal(), config.getTrialNumber());
-                    //Intent intent = new Intent(view.getContext(), InsertarIdUsuario.class);
-                Intent intent = new Intent(view.getContext(), SeleccionaConfiguracion.class);
-                //intent.putExtra("config",config);
-                    //intent.putExtra("seconds", speed);
-                    //intent.putExtra("entrenamiento", entrenamiento);
+                    config.setTrialNumber(trials.getValue());
+                    Intent intent = new Intent(view.getContext(), SeleccionarVelocidad.class);
+                    intent.putExtra("config",config);
                     view.getContext().startActivity(intent);
             }
         });

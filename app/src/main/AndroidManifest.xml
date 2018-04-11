@@ -10,8 +10,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".SeleccionaConfiguracion"
+        <activity
+            android:name=".SeleccionaConfiguracion"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,46 +19,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SeleccionaFigura"
-            android:screenOrientation="landscape">
-        </activity>
-
-        <activity android:name=".SeleccionaEntrenamientoVelocidad"
-            android:screenOrientation="landscape">
-        </activity>
-
-        <activity android:name=".SeleccionaDondeDesaparece"
-            android:screenOrientation="landscape">
-        </activity>
-
-        <activity android:name=".RutaPrincipal"
-            android:screenOrientation="landscape">
-        </activity>
-
-        <activity android:name=".RutaPrincipalDesaparece"
-            android:screenOrientation="landscape">
-        </activity>
-
-        <activity android:name=".InsertarIdUsuario"
-            android:screenOrientation="landscape">
-        </activity>
-
-        <activity android:name=".InsertarNombreConfig"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name=".Entrenamiento"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name=".ExplicacionEntrenamiento"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name=".Contador"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name=".ExplicacionPrincipal"
-            android:screenOrientation="landscape"/>
-
+        <activity
+            android:name=".SeleccionaFigura"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".SeleccionaEntrenamientoVelocidad"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".SeleccionaDondeDesaparece"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".RutaPrincipal"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".RutaPrincipalDesaparece"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".InsertarIdUsuario"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".InsertarNombreConfig"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Entrenamiento"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ExplicacionEntrenamiento"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Contador"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ExplicacionPrincipal"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".SeleccionarVelocidad"
+            android:label="@string/title_activity_seleccionar_velocidad"></activity>
     </application>
 
 </manifest>

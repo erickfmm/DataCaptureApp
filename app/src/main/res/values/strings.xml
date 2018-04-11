@@ -19,11 +19,13 @@
     <string name="ingrese_el_nombre_de_la_config">Enter the name of the configuration</string>
     <string name="selecciona_donde_desaparecera_el_objeto_inicio">Select the percentage of the screen on which the figure will disappear at start</string>
     <string name="selecciona_donde_desaparecera_el_objeto_final">Select the percentage of the screen on which the figure will disappear at end</string>
-    <string name="enter_the_number_of_trainings">Enter the number of trainings</string>
+    <string name="enter_trainings">Enter the number of trainings</string>
+    <string name="enter_trials">Enter the number of trials</string>
     <string name="enter_the_speed">Enter the speed (seconds that the object takes to travel through the screen)</string>
     <string name="bienvenido_al_entrenamiento">Welcome to the Training phase</string>
     <string name="explicacion">On the next screen follow the geometric figure with your finger.</string>
     <string name="countdown">CountDown</string>
     <string name="buen_trabajo">Good job during the training phase!</string>
     <string name="exp_principal">On the next screen you should do the same as during the training phase, but the geometric figure may disappear for a certain time, so you must pay attention!</string>
+    <string name="title_activity_seleccionar_velocidad">SeleccionarVelocidad</string>
 </resources>
