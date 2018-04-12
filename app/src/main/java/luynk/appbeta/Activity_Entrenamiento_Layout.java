@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,7 +55,7 @@ public class Activity_Entrenamiento_Layout extends View {
     Configuracion config;
     String idUsuario, todayString, rootPathUser;
 
-    FileOutputStream fos;
+    PrintWriter fwriter;
 
     private final static int interval = 5;
     Handler mHandler = new Handler();
@@ -127,12 +128,13 @@ public class Activity_Entrenamiento_Layout extends View {
         if (!f.exists()) {
             try {
                 f.createNewFile();
+                fwriter = new PrintWriter(f, "UTF-8");
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(context, "We need Write External Storage permission. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
             }
         }
-        fos = new FileOutputStream(f);
+
         //inicio handler
         startRepeatingTask();
     }
@@ -185,6 +187,9 @@ public class Activity_Entrenamiento_Layout extends View {
 
                 //Guardar ruta usuario en archivo
                 try {
+                    fwriter.write(Puntos.toCSV(ruta));
+                    fwriter.close();
+                    /*
                     if (contador_entrenamientos == 1){
                         ObjectOutputStream oos = new ObjectOutputStream(fos);
                         oos.writeChars(Puntos.toCSV(ruta));
@@ -197,9 +202,9 @@ public class Activity_Entrenamiento_Layout extends View {
                         //oos.writeObject(ruta);
                         //oos.writeBytes("Fin entrenamiento "+contador_entrenamientos);
                         oos.close();
-                    }
+                    }*/
 
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

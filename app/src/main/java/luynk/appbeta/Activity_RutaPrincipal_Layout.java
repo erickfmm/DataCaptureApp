@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,8 +51,8 @@ public class Activity_RutaPrincipal_Layout extends View {
     Configuracion config;
     String idUsuario, todayString, rootPathUser;
 
-    FileOutputStream fos;
-    FileOutputStream fosObj;
+    PrintWriter fos;
+    PrintWriter fosObj;
 
     private final static int interval = 5;
     Handler mHandler = new Handler();
@@ -120,12 +121,11 @@ public class Activity_RutaPrincipal_Layout extends View {
         }
         try {
             f.createNewFile();
+            fos = new PrintWriter(f, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(context, "We need Write External Storage permission. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
         }
-
-        fos = new FileOutputStream(f);
 
         //Crear archivo para ruta de objeto
         File f2 = new File(rootPathUser + idUsuario + "_coordFigure_"+contador_trials+"_"+chosen_ruta[contador_ruta]+"_"+todayString+".txt");
@@ -134,11 +134,11 @@ public class Activity_RutaPrincipal_Layout extends View {
         }
         try {
             f2.createNewFile();
+            fosObj = new PrintWriter(f2, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        fosObj = new FileOutputStream(f2);
 
         //inicio handler
         startRepeatingTask();
@@ -167,21 +167,25 @@ public class Activity_RutaPrincipal_Layout extends View {
 
             //Guardar ruta usuario en archivo
             try {
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                fos.write(Puntos.toCSV(ruta));
+                fos.close();
+                /*ObjectOutputStream oos = new ObjectOutputStream(fos);
                 oos.writeChars(Puntos.toCSV(ruta));
                 //oos.writeObject(ruta);
-                oos.close();
-            } catch (IOException e) {
+                oos.close();*/
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
             //Guardar ruta objeto en archivo
             try {
-                ObjectOutputStream oos = new ObjectOutputStream(fosObj);
+                fosObj.write(Puntos.toCSV(rutaObjeto));
+                fosObj.close();
+                /*ObjectOutputStream oos = new ObjectOutputStream(fosObj);
                 oos.writeChars(Puntos.toCSV(rutaObjeto));
                 //oos.writeObject(rutaObjeto);
-                oos.close();
-            } catch (IOException e) {
+                oos.close();*/
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

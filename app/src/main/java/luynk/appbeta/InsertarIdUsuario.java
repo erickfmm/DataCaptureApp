@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,13 +53,12 @@ public class InsertarIdUsuario extends Activity {
         contador_trials = 0; //Integer.parseInt(config.getTrialNumber());
 
         configurationStr = "Route: "+chosen_ruta[0]+", "+chosen_ruta[1]+", "+chosen_ruta[2];
-        configurationStr += "\nConfig:\nTrial Number: "+config.getTrialNumber()
-                +"\nId: "+config.getId()
-                +"\nName: "+config.getNombre()
+        configurationStr += "\nName: "+config.getNombre()
                 +"\nDisappear at: "+config.getDesapareceInicio()
                 +"\nDisappear ends: "+config.getDesapareceFinal()
                 +"\nSeconds speed: "+config.getSegundosVelocidad()
-                +"\nTrain number"+config.getIntentos();
+                +"\nTrain number: "+config.getIntentos()
+                +"\nTrial Number: "+config.getTrialNumber();
 
 
         Button continuar = (Button) findViewById(R.id.btIdUsuario);
@@ -99,13 +99,17 @@ public class InsertarIdUsuario extends Activity {
                         }
                     }
 
-
                     try{
-                        FileOutputStream fos = new FileOutputStream(f);
+                        PrintWriter writer = new PrintWriter(f, "UTF-8");
+                        writer.write(configurationStr);
+                        writer.close();
+
+
+                        /*FileOutputStream fos = new FileOutputStream(f);
                         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
                         oos.writeChars(configurationStr);
-                        oos.close();
+                        oos.close();*/
                     }catch(Exception e){
 
                     }

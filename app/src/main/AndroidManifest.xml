@@ -54,7 +54,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".SeleccionarVelocidad"
-            android:label="@string/title_activity_seleccionar_velocidad"></activity>
+            android:label="@string/title_activity_seleccionar_velocidad"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

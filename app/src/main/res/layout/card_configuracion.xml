@@ -1,101 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="150dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
         android:layout_height="match_parent"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:divider="@color/cardview_dark_background"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:background="#2ECCFA"
             android:gravity="center"
-            android:background="#2ECCFA">
-            
+            android:padding="5dp">
+
             <TextView
                 android:id="@+id/nombre_config"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="@string/nombre_config"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/intentos_config"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="@string/intentos_config"
-                android:textStyle="bold"
-                tools:ignore="NestedWeights" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/segundosVelocidad_config"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="@string/segundosVelocidad_config"
-                android:textStyle="bold"
-                tools:ignore="NestedWeights" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/desapareceInicio_config"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="@string/desapareceFinal_config"
-                android:textStyle="bold"
-                tools:ignore="NestedWeights" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/desapareceFinal"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="@string/desapareceFinal_config"
-                android:textStyle="bold"
-                tools:ignore="NestedWeights" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/intentos_trial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                tools:text="@string/trial_config" />
-
-            <View
-                android:id="@+id/linea_config"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#ffd5d5d5">
-
-            </View>
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/trial_config"
+                android:textStyle="bold" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

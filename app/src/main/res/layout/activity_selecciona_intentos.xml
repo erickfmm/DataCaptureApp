@@ -6,12 +6,12 @@
     tools:context="luynk.appbeta.SeleccionaEntrenamientoVelocidad">
 
     <ScrollView
+        android:id="@+id/scroll_vel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scroll_vel"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         tools:ignore="UselessParent">
 
     </ScrollView>

@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,7 +47,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
     Configuracion config;
     String idUsuario, todayString, rootPathUser;
 
-    FileOutputStream fos;
+    PrintWriter fos;
 
     private final static int interval = 5;
     Handler mHandler = new Handler();
@@ -110,10 +111,10 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
         }
         try {
             f.createNewFile();
+            fos = new PrintWriter(f, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        fos = new FileOutputStream(f);
 
         //inicio handler
         startRepeatingTask();
@@ -143,11 +144,13 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
 
                 //Guardar ruta de usuario en archivo
                 try {
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    fos.write(Puntos.toCSV(ruta));
+                    fos.close();
+                    /*ObjectOutputStream oos = new ObjectOutputStream(fos);
                     oos.writeChars(Puntos.toCSV(ruta));
                     //oos.writeObject(ruta);
-                    oos.close();
-                } catch (IOException e) {
+                    oos.close();*/
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
