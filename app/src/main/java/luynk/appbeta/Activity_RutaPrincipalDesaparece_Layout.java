@@ -99,7 +99,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
         totalTrials = ((RutaPrincipalDesaparece)getContext()).getTotalTrials();
         points = Ruta.getRuta(chosen_ruta[contador_ruta], Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
 
-        System.out.println("Act_Des-contador ruta: "+contador_ruta);
+        //System.out.println("Act_Des-contador ruta: "+contador_ruta);
 
         Date todayDate = Calendar.getInstance().getTime();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");

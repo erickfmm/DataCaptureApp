@@ -43,7 +43,7 @@ public class Contador extends Activity {
         new CountDownTimer(4000, 1000) {
             public void onTick(long millisUntilFinished) {
 
-                Log.d("mili", String.valueOf(millisUntilFinished));
+                //Log.d("mili", String.valueOf(millisUntilFinished));
                 if (millisUntilFinished >= 3000){
                     contador.setBackgroundResource(R.drawable.tres);
                 }else if (millisUntilFinished >= 2000){

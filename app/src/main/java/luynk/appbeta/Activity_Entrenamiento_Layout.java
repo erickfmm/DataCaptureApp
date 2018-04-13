@@ -113,8 +113,8 @@ public class Activity_Entrenamiento_Layout extends View {
         contador_trials = ((Entrenamiento)getContext()).getContador_trials();
         rootPathUser = ((Entrenamiento)getContext()).getRootPathUser();
 
-        System.out.println("Act_Entr-contador entrenamientos: "+contador_entrenamientos);
-        System.out.println("Act_Entr-contador ruta: "+contador_ruta);
+        //System.out.println("Act_Entr-contador entrenamientos: "+contador_entrenamientos);
+        //System.out.println("Act_Entr-contador ruta: "+contador_ruta);
         points = Ruta.getRuta(chosen_ruta[contador_ruta], Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
 
         Date todayDate = Calendar.getInstance().getTime();
@@ -162,7 +162,7 @@ public class Activity_Entrenamiento_Layout extends View {
                 stopRepeatingTask();
 
                 //Calcular error en la trayectoria
-                float yuser, yobj;
+                /*float yuser, yobj;
                 double suma=0;
 
                 for (int i=0; i<ruta.size(); i++){
@@ -182,7 +182,7 @@ public class Activity_Entrenamiento_Layout extends View {
                 }
 
                 suma = suma / ruta.size();
-                Log.d("Raiz", String.valueOf(Math.sqrt(suma)));
+                Log.d("Raiz", String.valueOf(Math.sqrt(suma)));*/
 
 
                 //Guardar ruta usuario en archivo

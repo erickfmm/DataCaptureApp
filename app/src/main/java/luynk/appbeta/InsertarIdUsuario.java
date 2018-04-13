@@ -47,9 +47,9 @@ public class InsertarIdUsuario extends Activity {
         contador_entrenamientos = 0;
         contador_ruta = 0;
         chosen_ruta = Ruta.chooseRoutes();
-        System.out.println("----------------------------------------------------------");
-        System.out.println(chosen_ruta[0]+", "+chosen_ruta[1]+", "+chosen_ruta[2]);
-        System.out.println("----------------------------------------------------------");
+        //System.out.println("----------------------------------------------------------");
+        //System.out.println(chosen_ruta[0]+", "+chosen_ruta[1]+", "+chosen_ruta[2]);
+        //System.out.println("----------------------------------------------------------");
         contador_trials = 0; //Integer.parseInt(config.getTrialNumber());
 
         configurationStr = "Route: "+chosen_ruta[0]+", "+chosen_ruta[1]+", "+chosen_ruta[2];

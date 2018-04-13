@@ -108,7 +108,7 @@ public class Activity_RutaPrincipal_Layout extends View {
         contador_trials = ((RutaPrincipal)getContext()).getContador_trials();
         points = Ruta.getRuta(chosen_ruta[contador_ruta], Integer.parseInt(config.getSegundosVelocidad()), getScreenWidth(), getScreenHeight());
 
-        System.out.println("Act_Prin-contador ruta: "+contador_ruta);
+        //System.out.println("Act_Prin-contador ruta: "+contador_ruta);
 
         Date todayDate = Calendar.getInstance().getTime();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
