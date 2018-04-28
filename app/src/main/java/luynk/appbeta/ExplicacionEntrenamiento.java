@@ -46,6 +46,7 @@ public class ExplicacionEntrenamiento extends Activity {
                 intent.putExtra("aux", aux);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 view.getContext().startActivity(intent);
+                finish();
             }
         });
     }

@@ -42,6 +42,7 @@ public class InsertarNombreConfig extends Activity{
                     Intent intent = new Intent(view.getContext(), SeleccionaDondeDesaparece.class);
                     intent.putExtra("config",config);
                     view.getContext().startActivity(intent);
+                    finish();
                 }
             }
         });

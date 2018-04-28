@@ -51,7 +51,7 @@ public class Ruta {
 
             if(flagFirst){
                 flagFirst = false;
-                for(int j=0;j<(int)(seconds*15.0);j++){
+                for(int j=0;j<45;j++){
                     points.add(new Puntos(elemento_x, elemento_y));
                 }
             }

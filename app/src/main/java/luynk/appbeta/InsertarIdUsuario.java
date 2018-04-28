@@ -123,6 +123,7 @@ public class InsertarIdUsuario extends Activity {
                     intent.putExtra("rootPathUser", rootPathUser);
                     intent.putExtra("contador_trials", contador_trials);
                     view.getContext().startActivity(intent);
+                    finish();
                 }
             }
         });

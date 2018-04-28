@@ -50,6 +50,7 @@ public class ExplicacionPrincipal extends Activity {
                 intent.putExtra("rootPathUser", rootPathUser);
                 intent.putExtra("aux", aux);
                 view.getContext().startActivity(intent);
+                finish();
             }
         });
     }

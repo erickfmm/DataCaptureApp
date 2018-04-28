@@ -181,6 +181,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
                         Intent newIntent = new Intent(this.getContext(), SeleccionaConfiguracion.class);
                         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         this.getContext().startActivity(newIntent);
+                        ((RutaPrincipalDesaparece)getContext()).finish();
                     }else{
                         Intent intent = new Intent(this.getContext(), Contador.class);
                         intent.putExtra("config",config);
@@ -192,6 +193,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
                         intent.putExtra("contador_trials", contador_trials);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         this.getContext().startActivity(intent);
+                        ((RutaPrincipalDesaparece)getContext()).finish();
                     }
 
                 }else{
@@ -205,6 +207,7 @@ public class Activity_RutaPrincipalDesaparece_Layout extends View {
                     intent.putExtra("contador_trials", contador_trials);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.getContext().startActivity(intent);
+                    ((RutaPrincipalDesaparece)getContext()).finish();
                 }
 
 

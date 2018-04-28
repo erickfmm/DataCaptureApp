@@ -222,6 +222,7 @@ public class Activity_RutaPrincipal_Layout extends View {
                 intent.putExtra("aux", "desaparece");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.getContext().startActivity(intent);
+                ((RutaPrincipal)getContext()).finish();
             } else {
                 Intent intent = new Intent(this.getContext(), Contador.class);
                 intent.putExtra("config", config);
@@ -234,6 +235,7 @@ public class Activity_RutaPrincipal_Layout extends View {
                 intent.putExtra("aux", "principal");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.getContext().startActivity(intent);
+                ((RutaPrincipal)getContext()).finish();
             }
 
 

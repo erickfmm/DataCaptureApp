@@ -228,6 +228,7 @@ public class Activity_Entrenamiento_Layout extends View {
                     intent.putExtra("contador_trials", contador_trials);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.getContext().startActivity(intent);
+                    ((Entrenamiento)getContext()).finish();
                 }else {
                     Intent intent = new Intent(this.getContext(), Contador.class);
                     intent.putExtra("config",config);
@@ -240,6 +241,7 @@ public class Activity_Entrenamiento_Layout extends View {
                     intent.putExtra("chosen_ruta", chosen_ruta);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.getContext().startActivity(intent);
+                    ((Entrenamiento)getContext()).finish();
                 }
 
             } else {
